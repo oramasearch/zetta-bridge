@@ -1,14 +1,14 @@
 # Zetta Bridge
 
-Bridge repo for **Orama Zetta** — pulls the Zetta module repos together as git submodules so one Claude Code session (or one human) can work across the whole system with full cross-reference. The bridge itself holds no application code; the engine and the docs site live in the submodules under `modules/`.
+Bridge repo for **Orama Zetta** — pulls the project's repos together as git submodules so one Claude Code session (or one human) can work across the whole system with full cross-reference. The bridge itself holds no application code; the product code and the docs site live in the submodules under `modules/`.
 
-**Orama Zetta** is a desktop GUI control plane for the **ZettaDB** engine: turn a plain-language problem — or an artifact you already have, like an n8n workflow — into a correct, professionally-architected data + AI **execution graph**, then deploy ZettaDB nodes and the workflows onto infrastructure you control and run them. *The data engineer, the AI engineer, and the platform engineer — in a bottle.* Tagline: **Intelligence Velocity for Big Thinkers.**
+**Orama Zetta turns a question into running, deployed intelligence.** Describe a data or AI problem in plain language — or hand over an artifact you already have (an n8n workflow, a SQL script, a notebook) — and Orama Zetta architects a correct data + AI pipeline, deploys it onto infrastructure *you* control, runs it, and **learns from your data**. *The data engineer, the AI engineer, and the platform engineer — in a bottle.* Tagline: **Intelligence Velocity for Big Thinkers.** Full framing: [`docs/projects/orama-platform-2/one-pager.md`](https://github.com/oramasearch/amaro-bridge/blob/main/docs/projects/orama-platform-2/one-pager.md) (in `amaro-bridge`).
 
 See [`CLAUDE.md`](CLAUDE.md) for full navigation, conventions, and the blueprint/sync model.
 
 ## Getting started
 
-The bridge is **empty without its submodules** — the engine code and the docs site live in `modules/*` as git submodules. Clone recursively:
+The bridge is **empty without its submodules** — the product code and the docs site live in `modules/*` as git submodules. Clone recursively:
 
 ```bash
 git clone --recursive git@github.com:oramasearch/zetta-bridge.git
@@ -33,7 +33,7 @@ Both submodules are **private** (`oramasearch/zetta`, `oramasearch/zetta-docs`) 
 
 | Module | What it is |
 |---|---|
-| [`modules/zetta`](modules/zetta/) | The **ZettaDB engine** (the database/compute substrate — *not* the product). C++26, equal-peer CRDT-replicated database (from-scratch C++ Automerge), JSONL on-disk storage + large objects, a Postgres-SQL subset parser, coroutine-native networking (Corosio), and headed (SDL3 + Dear ImGui) + headless modes — any node runs either way. Has its own `CLAUDE.md`; build with CMake. |
+| [`modules/zetta`](modules/zetta/) | **Orama Zetta** — the product. Turns a plain-language problem (or an artifact you already have) into a correct, deployed, running data + AI system on infrastructure you control, and learns from your data. *Under the hood today:* a C++26 equal-peer CRDT-replicated store with clustering, JSONL storage + large objects, a Postgres-SQL subset, headed (SDL3 + Dear ImGui) + headless modes. GUI control plane, one-button deploy, tiered storage, compute-near-data + the learning loop are in flight. Has its own `CLAUDE.md`; build with CMake. |
 | [`modules/zetta-docs`](modules/zetta-docs/) | The **Orama Zetta blueprint docs website** — MkDocs Material, Railway-hosted via `Dockerfile` + `railway.toml`. Generated, not hand-edited: projected from the wtm `ORAMA-ZETTA` blueprint. The `.sync/` generators (`create_issues.py`, `render.py`) live here. |
 
 ## The blueprint

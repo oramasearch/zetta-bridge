@@ -2,13 +2,13 @@
 
 ## What is Orama Zetta
 
-**Orama Zetta** is a desktop GUI **control plane** for the **ZettaDB** engine — *"the data engineer, the AI engineer, and the platform engineer in a bottle."* Tagline: **Intelligence Velocity for Big Thinkers.**
+**Orama Zetta turns a question into running, deployed intelligence.** Describe a data or AI problem in plain language — or hand over an artifact you already have (an n8n workflow, a SQL script, a notebook) — and Orama Zetta architects a correct data + AI pipeline, deploys it onto infrastructure *you* control (your k8s / AWS / Azure / GCP / on-prem), runs it, and **learns from your data**. *"The data engineer, the AI engineer, and the platform engineer — in a bottle."* It compresses the time from **intent → deployed, correct intelligence** from quarters to hours: **Intelligence Velocity for Big Thinkers.** Full framing: [`docs/projects/orama-platform-2/one-pager.md`](https://github.com/oramasearch/amaro-bridge/blob/main/docs/projects/orama-platform-2/one-pager.md).
 
-You give it a plain-language problem — or an artifact you already have, like an n8n workflow — and it produces a correct, professionally-architected data + AI **execution graph**, then provisions ZettaDB nodes and deploys the workflows onto infrastructure you control (local → private k8s → AWS/Azure/GCP/on-prem) and runs them. The desktop app is primarily an **orchestrator/coordinator**: it talks to cloud provisioning APIs through a **Cloud Interface** abstraction (local CLI impls *or* direct HTTP), reconciles desired→actual, and self-heals. It **may** *also* join the cluster as a ZettaDB node — to pull or hold data locally when a workflow needs it — but it doesn't have to. Data stays where it sits — no egress. It also **learns from your data** (native, cluster-parallel model training/inference reimplemented in C++/CUDA), rather than running inference over a rented model.
+**How it works — one flow:** *Ingest* (plain language + the artifacts you already have) → *Architect* (compile a correct execution graph, validated before it runs) → *Deploy* (one button onto your target; your data never leaves) → *Run + learn* (it gets sharper the more it sees). Why it's different: it **learns from your data** (trains on *your* data, not inference over a rented model), is **correct by construction** (every graph passes a correctness gate before deploy), runs **compute-near-data** with hot→cold→re-warm tiered storage, and is **governed self-serve** (in your environment, identity-scoped, audited).
 
-**Engine vs product:** `modules/zetta` (ZettaDB) is the **engine**; **Orama Zetta** is the **product** built on top. Don't conflate them.
+`oramasearch/zetta` **is** Orama Zetta — the product. The older name *"ZettaDB"* is **retired**; `zetta` is just the repo/binary codename. The full product surface (GUI control plane, one-button deploy, the learning loop, tiered storage) is **in flight**; the core runs today (a CRDT-replicated store with clustering + a Postgres-SQL subset).
 
-This **zetta-bridge** repo is a bridge — it ties the Orama Zetta modules together as git submodules so Claude Code (or a human) can work across the whole system at once, or inside any single module. It is **deliberately separate from `amaro-bridge`** and is **not** a submodule of it.
+This **zetta-bridge** repo is **not** the product — it's just a way to **group all the GitHub repos that make up the Orama Zetta project** (the product code, its technical docs, websites, …) as git submodules, so Claude Code (or a human) can work across them at once. It is **deliberately separate from `amaro-bridge`** and is **not** a submodule of it.
 
 ## Bridge repo purpose
 
@@ -18,9 +18,9 @@ A bridge has **no build, no runtime, no tests** of its own. The real code lives 
 
 Each module has (or will have) its own `CLAUDE.md` / `README.md` — **read those first** before editing inside a module.
 
-### `modules/zetta` — the ZettaDB engine
+### `modules/zetta` — Orama Zetta (the product)
 
-Private, **C++26**. The **engine** (not the product). An equal-peer, **CRDT-replicated** database (from-scratch C++ Automerge, ~90M ops/sec on 30 cores), JSONL on-disk storage + large objects, a Postgres-SQL **subset** parser on a dialect-neutral AST, coroutine-native networking (Corosio), and **headed** (SDL3 + Dear ImGui) + **headless** modes — any node can run either way. `CMakeLists.txt` build; has its own `CLAUDE.md`. **Planned (not yet built):** tiered storage, compute-near-data (embedded Lua/Orly + DDF API), indexing, k8s/cloud deploy, Postgres wire protocol, auth/RBAC. Imported from `homer6/zetta`. The substrate Orama Zetta wraps.
+Private, **C++26**. **Orama Zetta itself** — the product repo. **Under the hood today:** an equal-peer, **CRDT-replicated** store (from-scratch C++ Automerge, ~90M ops/sec on 30 cores), JSONL on-disk storage + large objects, a Postgres-SQL **subset** parser on a dialect-neutral AST, coroutine-native networking (Corosio), and **headed** (SDL3 + Dear ImGui — the desktop is itself a cluster member) + **headless** modes. `CMakeLists.txt` build; has its own `CLAUDE.md`. **In flight (not yet built):** the GUI control plane, tiered storage, compute-near-data (embedded Lua/Orly + DDF API), indexing, k8s/cloud deploy, Postgres wire protocol, auth/RBAC, the learning loop. Imported from `homer6/zetta`.
 
 ### `modules/zetta-docs` — the blueprint docs website
 
@@ -30,7 +30,7 @@ Private, **MkDocs Material** (markdown + pre-rendered Graphviz SVGs), Railway-ho
 
 Orama Zetta is designed **blueprint-first**. The single source of truth is the **worktree-manager (wtm) project `ORAMA-ZETTA`** — 278 artifacts across 14 domains + their traceability relations. The blueprint is projected onto two **regenerable** surfaces:
 
-1. **GitHub issues** on [`oramasearch/zetta`](https://github.com/oramasearch/zetta/issues) — one keyed, cross-linked, agent-ready issue per artifact (`[FEAT-3]`-style title, `#number` traceability links, Definition of Done, engine-repo + docs + source-of-truth references). Driven by [`modules/zetta-docs/.sync/create_issues.py`](modules/zetta-docs/.sync/create_issues.py).
+1. **GitHub issues** on [`oramasearch/zetta`](https://github.com/oramasearch/zetta/issues) — one keyed, cross-linked, agent-ready issue per artifact (`[FEAT-3]`-style title, `#number` traceability links, Definition of Done, code-repo + docs + source-of-truth references). Driven by [`modules/zetta-docs/.sync/create_issues.py`](modules/zetta-docs/.sync/create_issues.py).
 2. **Docs site** — [`modules/zetta-docs`](modules/zetta-docs/) renders one page per domain + 3 Graphviz diagrams. Driven by [`modules/zetta-docs/.sync/render.py`](modules/zetta-docs/.sync/render.py).
 
 **Hard rule — the sync is non-destructive to wtm.** It only **reads** wtm (`list_projects`, `list_artifacts`, `list_relations`, `list_artifact_types`, `list_relation_types`, `blueprint_status`) and **writes** issues + docs. **Never** call a wtm write tool (`create_artifact(s)`, `set_artifact_body`, `update_artifact`, `create_relation(s)`, `generate_blueprint`, `create_project`) from the sync. To change the design, edit the wtm artifact, then re-run the generators.
@@ -67,11 +67,11 @@ Do not use the auto-memory system in this project. Memory lives on the local mac
 
 ## Layout
 
-- `modules/<name>/` — git submodules (the engine + the docs site). See **Modules** above.
+- `modules/<name>/` — git submodules (the Orama Zetta product repo + the docs site). See **Modules** above.
 - `docs/` — cross-module bridge docs (see [`docs/README.md`](docs/README.md)).
 
 ## Related
 
-- [`oramasearch/zetta`](https://github.com/oramasearch/zetta) — the engine + the blueprint's tracking issues.
+- [`oramasearch/zetta`](https://github.com/oramasearch/zetta) — Orama Zetta (the product) + the blueprint's tracking issues.
 - [`oramasearch/zetta-docs`](https://github.com/oramasearch/zetta-docs) — the docs site source.
 - `amaro-bridge` — the sibling bridge where the `zetta-sync` skill + the originating product/blueprint context (`docs/projects/orama-platform-2/`) currently live. Kept separate by design.
