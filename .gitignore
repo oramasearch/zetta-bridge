@@ -1,0 +1,25 @@
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*~
+
+# Python / uv
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.python-version
+
+# Local env and secrets
+.env
+.env.*
+!.env.example
+
+# Claude Code local state
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+
+# Never commit
+.slack-webhook
