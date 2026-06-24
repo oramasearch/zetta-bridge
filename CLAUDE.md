@@ -4,7 +4,9 @@
 
 **Orama Zetta** is a desktop GUI **control plane** for the **ZettaDB** engine — *"the data engineer, the AI engineer, and the platform engineer in a bottle."* Tagline: **Intelligence Velocity for Big Thinkers.**
 
-You give it a plain-language problem — or an artifact you already have, like an n8n workflow — and it produces a correct, professionally-architected data + AI **execution graph**, then provisions ZettaDB nodes and deploys the workflows onto infrastructure you control (local → private k8s → AWS/Azure/GCP/on-prem) and runs them. The desktop app is itself a **cluster node** and an **orchestrator**: it talks to cloud provisioning APIs through a **Cloud Interface** abstraction (local CLI impls *or* direct HTTP), reconciles desired→actual, and self-heals. Data stays where it sits — no egress. It also **learns from your data** (native, cluster-parallel model training/inference reimplemented in C++/CUDA), rather than running inference over a rented model.
+You give it a plain-language problem — or an artifact you already have, like an n8n workflow — and it produces a correct, professionally-architected data + AI **execution graph**, then provisions ZettaDB nodes and deploys the workflows onto infrastructure you control (local → private k8s → AWS/Azure/GCP/on-prem) and runs them. The desktop app is primarily an **orchestrator/coordinator**: it talks to cloud provisioning APIs through a **Cloud Interface** abstraction (local CLI impls *or* direct HTTP), reconciles desired→actual, and self-heals. It **may** *also* join the cluster as a ZettaDB node — to pull or hold data locally when a workflow needs it — but it doesn't have to. Data stays where it sits — no egress. It also **learns from your data** (native, cluster-parallel model training/inference reimplemented in C++/CUDA), rather than running inference over a rented model.
+
+**Engine vs product:** `modules/zetta` (ZettaDB) is the **engine**; **Orama Zetta** is the **product** built on top. Don't conflate them.
 
 This **zetta-bridge** repo is a bridge — it ties the Orama Zetta modules together as git submodules so Claude Code (or a human) can work across the whole system at once, or inside any single module. It is **deliberately separate from `amaro-bridge`** and is **not** a submodule of it.
 
@@ -18,7 +20,7 @@ Each module has (or will have) its own `CLAUDE.md` / `README.md` — **read thos
 
 ### `modules/zetta` — the ZettaDB engine
 
-Private, **C++26**. An equal-peer, **CRDT-replicated** database (from-scratch C++ Automerge, ~90M ops/sec on 30 cores), JSONL on-disk storage + large objects, a Postgres-SQL **subset** parser on a dialect-neutral AST, coroutine-native networking (Corosio), and **headed** (SDL3 + Dear ImGui — *the desktop is a cluster node*) + headless modes. `CMakeLists.txt` build; has its own `CLAUDE.md`. **Planned (not yet built):** tiered storage, compute-near-data (embedded Lua/Orly + DDF API), indexing, k8s/cloud deploy, Postgres wire protocol, auth/RBAC. Imported from `homer6/zetta`. The substrate Orama Zetta wraps.
+Private, **C++26**. The **engine** (not the product). An equal-peer, **CRDT-replicated** database (from-scratch C++ Automerge, ~90M ops/sec on 30 cores), JSONL on-disk storage + large objects, a Postgres-SQL **subset** parser on a dialect-neutral AST, coroutine-native networking (Corosio), and **headed** (SDL3 + Dear ImGui) + **headless** modes — any node can run either way. `CMakeLists.txt` build; has its own `CLAUDE.md`. **Planned (not yet built):** tiered storage, compute-near-data (embedded Lua/Orly + DDF API), indexing, k8s/cloud deploy, Postgres wire protocol, auth/RBAC. Imported from `homer6/zetta`. The substrate Orama Zetta wraps.
 
 ### `modules/zetta-docs` — the blueprint docs website
 

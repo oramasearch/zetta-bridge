@@ -33,7 +33,7 @@ Both submodules are **private** (`oramasearch/zetta`, `oramasearch/zetta-docs`) 
 
 | Module | What it is |
 |---|---|
-| [`modules/zetta`](modules/zetta/) | The **ZettaDB engine** — C++26, equal-peer CRDT-replicated database (from-scratch C++ Automerge), JSONL on-disk storage + large objects, a Postgres-SQL subset parser, coroutine-native networking (Corosio), and headed (SDL3 + Dear ImGui — *the desktop is a cluster node*) + headless modes. Has its own `CLAUDE.md`; build with CMake. |
+| [`modules/zetta`](modules/zetta/) | The **ZettaDB engine** (the database/compute substrate — *not* the product). C++26, equal-peer CRDT-replicated database (from-scratch C++ Automerge), JSONL on-disk storage + large objects, a Postgres-SQL subset parser, coroutine-native networking (Corosio), and headed (SDL3 + Dear ImGui) + headless modes — any node runs either way. Has its own `CLAUDE.md`; build with CMake. |
 | [`modules/zetta-docs`](modules/zetta-docs/) | The **Orama Zetta blueprint docs website** — MkDocs Material, Railway-hosted via `Dockerfile` + `railway.toml`. Generated, not hand-edited: projected from the wtm `ORAMA-ZETTA` blueprint. The `.sync/` generators (`create_issues.py`, `render.py`) live here. |
 
 ## The blueprint
