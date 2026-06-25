@@ -37,6 +37,10 @@ Orama Zetta is designed **blueprint-first**. The single source of truth is the *
 
 The orchestrating **`zetta-sync` skill** currently lives in `amaro-bridge/.claude/skills/zetta-sync/` (with the runbook at `amaro-bridge/docs/plans/orama-zetta-sync-plan.md`). The generator scripts themselves travel with this bridge inside `modules/zetta-docs/.sync/`. Migrating the skill into this repo's own `.claude/skills/` is a reasonable follow-up.
 
+## Use cases + the catalog
+
+Orama Zetta is built **use-case-first**: each use case is a *generic AI-project type* (the central item is the **AI project** — most AI projects fail, so the product's job is **data-project management**). **Churn (UC-1)** is the first, built via a **wtm worktree plan** over its issues (`create_worktree_plan` → `generate_worktree_plan` → `launch_plan_layer` — an execution graph that launches parallel worktrees). **Grow the catalog** with the **`add-use-case`** skill + the [`adding-a-use-case`](https://github.com/oramasearch/amaro-bridge/blob/main/docs/runbooks/adding-a-use-case.md) runbook (both in `amaro-bridge`): generate a **Perplexity Deep Research** prompt for the use case → land it in the blueprint as `UC-N` + its dependency closure → sync → worktree plan. Framing detail: [`modules/zetta/docs/orama-zetta.md`](modules/zetta/docs/orama-zetta.md).
+
 ## Conventions (repo-wide)
 
 ### No AI attribution in commits or PRs
