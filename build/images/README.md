@@ -9,6 +9,7 @@ so it cannot trigger any CI; the Dockerfiles live here in the bridge, never in `
 | Image | Repo | Dockerfile | Source | Notes |
 |---|---|---|---|---|
 | Zetta (headless) | `oramasearch/zetta` | [`zetta-headless/Dockerfile`](zetta-headless/Dockerfile) | `modules/zetta` | The single `zetta` binary run with `--headless`. C++26 (clang-19) + CMake ≥3.30 (`cxx_std_26`). The build still compiles SDL3/ImGui (no headless-only target yet); the runtime image needs no display libs. |
+| Zetta e2e runner | `oramasearch/zetta-e2e` | [`zetta-e2e/Dockerfile`](zetta-e2e/Dockerfile) | `modules/zetta` | Alpine + `curl` + `jq` + the e2e script (`tests/e2e/zetta-e2e.sh`). No compile — builds fast for any arch. Run in-cluster by the operator's `ZettaClusterE2ETest` CRD against a deployed `OramaZettaCluster`; drives the node's `:4800` API (test levels 2 + 3). |
 
 ## Build + push
 
@@ -28,6 +29,21 @@ docker push oramasearch/zetta:headless-v1-sandbox
 
 The operator's `OramaZettaCluster` CRD pulls `oramasearch/zetta:headless-v1-sandbox` by default. See the
 plan of record: [`orama-bridge` `docs/projects/one-orama`](https://github.com/oramasearch/orama-bridge/tree/main/docs/projects/one-orama).
+
+The **e2e runner** is a plain Alpine image (no C++ compile), so it builds for `linux/amd64` anywhere —
+use `buildx` on Apple Silicon to target the cluster's arch. The build context is still the zetta source
+so the script is baked from the pinned commit (build it after the zetta change that adds
+`tests/e2e/zetta-e2e.sh` is checked out):
+
+```bash
+# from zetta-bridge/ , context = the zetta source
+docker buildx build --platform linux/amd64 --push \
+  -f build/images/zetta-e2e/Dockerfile \
+  -t oramasearch/zetta-e2e:v1-sandbox \
+  modules/zetta
+```
+
+The operator's `ZettaClusterE2ETest` CRD runs `oramasearch/zetta-e2e:v1-sandbox` by default.
 
 ## Notes / gotchas
 
