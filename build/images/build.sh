@@ -66,9 +66,15 @@ while IFS='|' read -r name repo ctx dockerfile extra tagoverride; do
     echo "    !! source missing: ${ctx} (run 'git submodule update --init --recursive ${ctx}')" >&2
     exit 1
   fi
-  out="--load"; [ $PUSH -eq 1 ] && out="--push"
   # shellcheck disable=SC2086
-  docker buildx build --platform "$PLATFORM" -t "$image" -f "$dockerfile" $extra $out "$ctx"
+  if docker buildx version >/dev/null 2>&1; then
+    out="--load"; [ $PUSH -eq 1 ] && out="--push"
+    docker buildx build --platform "$PLATFORM" -t "$image" -f "$dockerfile" $extra $out "$ctx"
+  else
+    # No buildx plugin (e.g. the native amd64 build box): plain build for the host arch + explicit push.
+    docker build -t "$image" -f "$dockerfile" $extra "$ctx"
+    [ $PUSH -eq 1 ] && docker push "$image"
+  fi
   built+=("$image")
   # Reproducibility record: the exact source commit + (when pushed) the image digest, so a
   # rebuild from the same submodule SHA + pinned base images reproduces the same image.
@@ -81,6 +87,7 @@ while IFS='|' read -r name repo ctx dockerfile extra tagoverride; do
       sha256:*) : ;;
       *) digest=$(docker buildx imagetools inspect "$image" 2>/dev/null | awk '/^Digest:/{print $2; exit}') ;;
     esac
+    case "$digest" in sha256:*) : ;; *) digest=$(docker inspect --format '{{index .RepoDigests 0}}' "$image" 2>/dev/null | sed 's/.*@//') ;; esac
     [ -n "$digest" ] || digest='?'
   else
     digest='(local, not pushed)'
