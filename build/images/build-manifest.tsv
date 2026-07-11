@@ -1,0 +1,3 @@
+# Build reproducibility record — rebuild: build/images/build.sh --push <components> (base images are digest-pinned).
+component	image	source@commit	digest	platform
+zetta-e2e	oramasearch/zetta-e2e:v1-sandbox	modules/zetta@3387377	sha256:ff36b7db218e204dd9f07944f06e7f8dcb9d45c2e6c5fb63a0c1b51448ea0c7b	linux/amd64

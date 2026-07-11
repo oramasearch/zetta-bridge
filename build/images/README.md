@@ -9,25 +9,33 @@ so it cannot trigger any CI; the Dockerfiles live here in the bridge, never in `
 | Image | Repo | Dockerfile | Source | Notes |
 |---|---|---|---|---|
 | Zetta (headless) | `oramasearch/zetta` | [`zetta-headless/Dockerfile`](zetta-headless/Dockerfile) | `modules/zetta` | The single `zetta` binary run with `--headless`. C++26 (clang-19) + CMake ≥3.30 (`cxx_std_26`). The build still compiles SDL3/ImGui (no headless-only target yet); the runtime image needs no display libs. |
+| Zetta e2e runner | `oramasearch/zetta-e2e` | [`zetta-e2e/Dockerfile`](zetta-e2e/Dockerfile) | `modules/zetta` | Alpine + `curl` + `jq` + the e2e script (`tests/e2e/zetta-e2e.sh`). No compile — builds fast for any arch. Run in-cluster by the operator's `ZettaClusterE2ETest` CRD against a deployed `OramaZettaCluster`; drives the node's `:4800` API (test levels 2 + 3). |
 
 ## Build + push
 
-Requires Docker + `docker login` (Docker Hub). The build is a **native `linux/amd64`** compile — do it
-on an amd64 host (QEMU emulation on Apple Silicon hits `Illegal instruction` and is far too slow for a
-C++26 build). All Zetta submodules must be checked out recursively (`git submodule update --init
---recursive`) — the Dockerfile `COPY`s them; no git/SSH is needed inside the build.
+Use **[`build.sh`](build.sh)** — the same manifest-driven pattern as
+[`orama-cloud-v1-bridge/build/images`](https://github.com/oramasearch/orama-cloud-v1-bridge/tree/main/build/images):
+it builds each component from its submodule source with `docker buildx`, pushes to the **private**
+`oramasearch/*` repo (create it private first — see the `dockerhub-ops` skill), and records a
+reproducibility row (`source@commit` + image digest) into [`build-manifest.tsv`](build-manifest.tsv).
+Don't hand-run `docker build`/`buildx` — go through the script so the manifest stays honest.
 
 ```bash
-# from zetta-bridge/ , context = the zetta source
-DOCKER_BUILDKIT=0 docker build \
-  -f build/images/zetta-headless/Dockerfile \
-  -t oramasearch/zetta:headless-v1-sandbox \
-  modules/zetta
-docker push oramasearch/zetta:headless-v1-sandbox
+# from zetta-bridge/  (run `docker login` first; recurse submodules for the engine build)
+./build/images/build.sh --push zetta-e2e                 # the e2e runner (amd64, any host)
+./build/images/build.sh --push zetta-headless            # the C++26 engine — NATIVE amd64 only
+./build/images/build.sh                                  # build all locally (--load), no push
+REGISTRY=oramasearch TAG=v1-sandbox ./build/images/build.sh --push zetta-e2e zetta-headless
 ```
 
-The operator's `OramaZettaCluster` CRD pulls `oramasearch/zetta:headless-v1-sandbox` by default. See the
-plan of record: [`orama-bridge` `docs/projects/one-orama`](https://github.com/oramasearch/orama-bridge/tree/main/docs/projects/one-orama).
+- **`zetta-e2e`** → `oramasearch/zetta-e2e:v1-sandbox` — Alpine + `curl`/`jq` + the baked suite; no
+  compile, so it builds for `linux/amd64` anywhere. Pulled by the operator's `ZettaClusterE2ETest` CRD.
+- **`zetta-headless`** → `oramasearch/zetta:headless-v1-sandbox` — the C++26 engine. This is a **native
+  `linux/amd64`** compile: run it on the amd64 build box (QEMU emulation on Apple Silicon hits
+  `Illegal instruction` and is far too slow). Recurse submodules first (`git submodule update --init
+  --recursive modules/zetta`) — the Dockerfile `COPY`s them. Pulled by the `OramaZettaCluster` CRD.
+
+Plan of record: [`orama-bridge` `docs/projects/one-orama`](https://github.com/oramasearch/orama-bridge/tree/main/docs/projects/one-orama).
 
 ## Notes / gotchas
 
