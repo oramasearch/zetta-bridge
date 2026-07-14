@@ -4,3 +4,6 @@
 [submodule "modules/zetta-docs"]
 	path = modules/zetta-docs
 	url = git@github.com:oramasearch/zetta-docs.git
+[submodule "modules/solutions-designs"]
+	path = modules/solutions-designs
+	url = git@github.com:oramasearch/solutions-designs.git

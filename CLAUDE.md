@@ -26,6 +26,10 @@ Private, **C++26**. **Orama Zetta itself** — the product repo. **Under the hoo
 
 Private, **MkDocs Material** (markdown + pre-rendered Graphviz SVGs), Railway-hosted via `Dockerfile` + `railway.toml`. The browsable rendering of the **Orama Zetta blueprint** — strategy, architecture/ADRs, domain model, data, security, UX, delivery, backlog, testing, risks, governance, glossary, diagrams. **Generated, not hand-edited.** The `.sync/` generators live here: `create_issues.py` (wtm → keyed GitHub issues) and `render.py` (wtm → docs pages + diagrams). Run: `mkdocs serve`. Don't edit `docs/*.md` by hand — re-run the sync.
 
+### `modules/solutions-designs` — enterprise AI solution designs
+
+Private, docs-only (no build/runtime/tests). A working space where a real-world **enterprise AI problem** is taken end-to-end into a concrete **Orama Zetta solution design**. Worked in **strict stages — evidence & ideas → analysis → design** (we don't jump ahead). One folder per solution under `solutions/<slug>/`; `templates/solution/` is the scaffold. Has its own `CLAUDE.md`. The governing rule for the current stage: **collect, don't conclude** — gather raw evidence + loose ideas, no analysis/ranking/design until explicitly moved on.
+
 ## The blueprint + sync model
 
 Orama Zetta is designed **blueprint-first**. The single source of truth is the **worktree-manager (wtm) project `ORAMA-ZETTA`** — 278 artifacts across 14 domains + their traceability relations. The blueprint is projected onto two **regenerable** surfaces:

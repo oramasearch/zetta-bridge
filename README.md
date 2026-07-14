@@ -27,7 +27,7 @@ Keep the pinned commits up to date after a `git pull`:
 git submodule update --init --recursive
 ```
 
-Both submodules are **private** (`oramasearch/zetta`, `oramasearch/zetta-docs`) — you need `git@github.com:`-style SSH access with a key registered to the `oramasearch` org.
+All submodules are **private** (`oramasearch/zetta`, `oramasearch/zetta-docs`, `oramasearch/solutions-designs`) — you need `git@github.com:`-style SSH access with a key registered to the `oramasearch` org.
 
 ## Modules
 
@@ -35,6 +35,7 @@ Both submodules are **private** (`oramasearch/zetta`, `oramasearch/zetta-docs`) 
 |---|---|
 | [`modules/zetta`](modules/zetta/) | **Orama Zetta** — the product. Turns a plain-language problem (or an artifact you already have) into a correct, deployed, running data + AI system on infrastructure you control, and learns from your data. *Under the hood today:* a C++26 equal-peer CRDT-replicated store with clustering, JSONL storage + large objects, a Postgres-SQL subset, headed (SDL3 + Dear ImGui) + headless modes. GUI control plane, one-button deploy, tiered storage, compute-near-data + the learning loop are in flight. Has its own `CLAUDE.md`; build with CMake. |
 | [`modules/zetta-docs`](modules/zetta-docs/) | The **Orama Zetta blueprint docs website** — MkDocs Material, Railway-hosted via `Dockerfile` + `railway.toml`. Generated, not hand-edited: projected from the wtm `ORAMA-ZETTA` blueprint. The `.sync/` generators (`create_issues.py`, `render.py`) live here. |
+| [`modules/solutions-designs`](modules/solutions-designs/) | **Enterprise AI solution designs for Orama Zetta** — a working space where a real-world enterprise AI problem is taken end-to-end into a Zetta solution design. Staged workflow: **evidence & ideas → analysis → design**. No application code. Has its own `CLAUDE.md`. |
 
 ## The blueprint
 
