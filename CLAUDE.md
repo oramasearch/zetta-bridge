@@ -30,6 +30,15 @@ Private, **MkDocs Material** (markdown + pre-rendered Graphviz SVGs), Railway-ho
 
 Private, docs-only (no build/runtime/tests). A working space where a real-world **enterprise AI problem** is taken end-to-end into a concrete **Orama Zetta solution design**. Worked in **strict stages — evidence & ideas → analysis → design** (we don't jump ahead). One folder per solution under `solutions/<slug>/`; `templates/solution/` is the scaffold. Has its own `CLAUDE.md`. The governing rule for the current stage: **collect, don't conclude** — gather raw evidence + loose ideas, no analysis/ranking/design until explicitly moved on.
 
+### `modules/orama-design` — Orama visual design
+
+Private, the **Orama design / visual** repo. Pinned as a **branch-following submodule** on
+`claude/orama-visual-02` (visual + design-system work for the product surface — e.g. Orama
+Studio UI treatments; the branch tip is `feat(studio): panel-style rail toggle`). Read its
+own `README.md` before editing. Because it tracks a branch, `git submodule update --remote
+modules/orama-design` pulls the latest on `claude/orama-visual-02` (plain `--init` still
+checks out the pinned commit).
+
 ## The blueprint + sync model
 
 Orama Zetta is designed **blueprint-first**. The single source of truth is the **worktree-manager (wtm) project `ORAMA-ZETTA`** — 278 artifacts across 14 domains + their traceability relations. The blueprint is projected onto two **regenerable** surfaces:

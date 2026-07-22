@@ -7,3 +7,7 @@
 [submodule "modules/solutions-designs"]
 	path = modules/solutions-designs
 	url = git@github.com:oramasearch/solutions-designs.git
+[submodule "modules/orama-design"]
+	path = modules/orama-design
+	url = git@github.com:oramasearch/orama-design.git
+	branch = claude/orama-visual-02
