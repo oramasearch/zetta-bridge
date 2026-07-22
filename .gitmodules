@@ -10,4 +10,4 @@
 [submodule "modules/orama-design"]
 	path = modules/orama-design
 	url = git@github.com:oramasearch/orama-design.git
-	branch = claude/orama-visual-02
+	branch = main

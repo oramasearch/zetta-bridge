@@ -33,10 +33,10 @@ Private, docs-only (no build/runtime/tests). A working space where a real-world 
 ### `modules/orama-design` — Orama visual design
 
 Private, the **Orama design / visual** repo. Pinned as a **branch-following submodule** on
-`claude/orama-visual-02` (visual + design-system work for the product surface — e.g. Orama
+`main` (visual + design-system work for the product surface — e.g. Orama
 Studio UI treatments; the branch tip is `feat(studio): panel-style rail toggle`). Read its
 own `README.md` before editing. Because it tracks a branch, `git submodule update --remote
-modules/orama-design` pulls the latest on `claude/orama-visual-02` (plain `--init` still
+modules/orama-design` pulls the latest on `main` (plain `--init` still
 checks out the pinned commit).
 
 ## The blueprint + sync model
