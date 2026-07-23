@@ -41,11 +41,13 @@ checks out the pinned commit).
 
 ### `modules/orama-perfcost` — benchmarking + cost/performance
 
-Private, docs/data + harnesses (bootstrapping). **Performance benchmarking** and
-**cost analysis** of Orama products — reproducible benchmark harnesses and scenario
-definitions, generated cost/performance datasets (latency, throughput, resource usage;
-compute/storage/LLM cost models), and comparison tooling across the engine, cloud, and
-desktop surfaces. Pinned as a **branch-following** submodule on `main` (`git submodule
+Private, docs/data + harnesses. **Performance benchmarking** and **cost analysis** of
+Orama products vs third-party products (e.g. Turbopuffer — vendor-published numbers
+harvested with full provenance). Canonical output: `data/latest.json` (spec in
+`spec/dataset-spec.md`), built/validated by stdlib-only Python scripts; refreshes are
+driven by the module's own **`perfcost-refresh` skill** (`.claude/skills/perfcost-refresh/`,
+runbook at `docs/runbook.md`). First-party Zetta harness is stubbed — blocked on the
+Zetta API. Pinned as a **branch-following** submodule on `main` (`git submodule
 update --remote modules/orama-perfcost` pulls the latest; plain `--init` checks out the
 pinned commit). Read its own `README.md` before editing.
 
