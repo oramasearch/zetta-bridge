@@ -32,12 +32,17 @@ Private, docs-only (no build/runtime/tests). A working space where a real-world 
 
 ### `modules/orama-design` — Orama visual design
 
-Private, the **Orama design / visual** repo. Pinned as a **branch-following submodule** on
-`main` (visual + design-system work for the product surface — e.g. Orama
-Studio UI treatments; the branch tip is `feat(studio): panel-style rail toggle`). Read its
-own `README.md` before editing. Because it tracks a branch, `git submodule update --remote
-modules/orama-design` pulls the latest on `main` (plain `--init` still
-checks out the pinned commit).
+Private, the **Orama design / visual** repo (Daniel's design workspace, upstream
+`nisttahuz/orama-website`). Pinned as a **branch-following submodule** on `main`, which
+carries the merged July 23 state: the live **Orama Studio** prototype (`src/studio/`),
+the design system (`packages/design-system/`, Storybook = source of truth), the Zetta
+baseline (`apps/zetta-studio/`), the marketing clone + skins (`src/`), and the Orama
+Project Hub (`src/workspace/`). Read its `CLAUDE.md` + `HANDOFF.md` before editing. A
+deep inventory (screens, flows, personas, components, decisions) lives in the umbrella
+bridge at `docs/projects/orama-studio-marketplace/design-index.md`
+(https://github.com/oramasearch/orama-bridge). Because it tracks a branch,
+`git submodule update --remote modules/orama-design` pulls the latest on `main` (plain
+`--init` still checks out the pinned commit).
 
 ### `modules/orama-perfcost` — benchmarking + cost/performance
 
