@@ -11,3 +11,7 @@
 	path = modules/orama-design
 	url = git@github.com:oramasearch/orama-design.git
 	branch = main
+[submodule "modules/orama-perfcost"]
+	path = modules/orama-perfcost
+	url = git@github.com:oramasearch/orama-perfcost.git
+	branch = main

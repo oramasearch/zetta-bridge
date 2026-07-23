@@ -39,6 +39,16 @@ own `README.md` before editing. Because it tracks a branch, `git submodule updat
 modules/orama-design` pulls the latest on `main` (plain `--init` still
 checks out the pinned commit).
 
+### `modules/orama-perfcost` — benchmarking + cost/performance
+
+Private, docs/data + harnesses (bootstrapping). **Performance benchmarking** and
+**cost analysis** of Orama products — reproducible benchmark harnesses and scenario
+definitions, generated cost/performance datasets (latency, throughput, resource usage;
+compute/storage/LLM cost models), and comparison tooling across the engine, cloud, and
+desktop surfaces. Pinned as a **branch-following** submodule on `main` (`git submodule
+update --remote modules/orama-perfcost` pulls the latest; plain `--init` checks out the
+pinned commit). Read its own `README.md` before editing.
+
 ## The blueprint + sync model
 
 Orama Zetta is designed **blueprint-first**. The single source of truth is the **worktree-manager (wtm) project `ORAMA-ZETTA`** — 278 artifacts across 14 domains + their traceability relations. The blueprint is projected onto two **regenerable** surfaces:
