@@ -51,6 +51,20 @@ Zetta API. Pinned as a **branch-following** submodule on `main` (`git submodule
 update --remote modules/orama-perfcost` pulls the latest; plain `--init` checks out the
 pinned commit). Read its own `README.md` before editing.
 
+### `modules/orama-website-v2` — the Orama marketing website
+
+Private, **Vite + React + shadcn/ui**, prerendered/SSG (custom scripts, not a
+meta-framework); content lives as TS modules under `src/content/` with build-time
+content gates under `src/content/validation/` + `content/registry/` (routes, claims,
+product-truth, forbidden-content). **Currently enforces a price-free / no-numbers
+posture** — any currency token or metric fails the build. Future consumer of the
+`orama-perfcost` dataset via the vendored-copy publish path
+([`modules/orama-perfcost/docs/architecture.md`](modules/orama-perfcost/docs/architecture.md));
+wiring that up requires lifting the posture + a net-new compare surface. Pinned as a
+**branch-following** submodule on `main` (`git submodule update --remote
+modules/orama-website-v2` pulls the latest; plain `--init` checks out the pinned
+commit). Read its own docs before editing.
+
 ## The blueprint + sync model
 
 Orama Zetta is designed **blueprint-first**. The single source of truth is the **worktree-manager (wtm) project `ORAMA-ZETTA`** — 278 artifacts across 14 domains + their traceability relations. The blueprint is projected onto two **regenerable** surfaces:

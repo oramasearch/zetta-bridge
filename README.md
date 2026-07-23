@@ -27,7 +27,7 @@ Keep the pinned commits up to date after a `git pull`:
 git submodule update --init --recursive
 ```
 
-All submodules are **private** (`oramasearch/zetta`, `oramasearch/zetta-docs`, `oramasearch/solutions-designs`, `oramasearch/orama-design`, `oramasearch/orama-perfcost`) — you need `git@github.com:`-style SSH access with a key registered to the `oramasearch` org.
+All submodules are **private** (`oramasearch/zetta`, `oramasearch/zetta-docs`, `oramasearch/solutions-designs`, `oramasearch/orama-design`, `oramasearch/orama-perfcost`, `oramasearch/orama-website-v2`) — you need `git@github.com:`-style SSH access with a key registered to the `oramasearch` org.
 
 ## Modules
 
@@ -38,6 +38,7 @@ All submodules are **private** (`oramasearch/zetta`, `oramasearch/zetta-docs`, `
 | [`modules/solutions-designs`](modules/solutions-designs/) | **Enterprise AI solution designs for Orama Zetta** — a working space where a real-world enterprise AI problem is taken end-to-end into a Zetta solution design. Staged workflow: **evidence & ideas → analysis → design**. No application code. Has its own `CLAUDE.md`. |
 | [`modules/orama-design`](modules/orama-design/) | **Orama visual design** — the design / visual repo, pinned as a **branch-following** submodule on `main` (design-system + Studio UI work). Refresh with `git submodule update --remote modules/orama-design`. Has its own `README.md`. |
 | [`modules/orama-perfcost`](modules/orama-perfcost/) | **Orama benchmarking + cost/performance** — reproducible benchmark harnesses and generated cost/performance datasets (latency, throughput, resource usage, compute/storage/LLM cost models) across the Orama product portfolio. Pinned as a **branch-following** submodule on `main`. Refresh with `git submodule update --remote modules/orama-perfcost`. Has its own `README.md`. |
+| [`modules/orama-website-v2`](modules/orama-website-v2/) | **Orama marketing website** — Vite + React + shadcn/ui SPA, prerendered/SSG, content as TS modules with build-time content gates (price-free posture). Future consumer of the `orama-perfcost` dataset (vendored-copy publish path — see `modules/orama-perfcost/docs/architecture.md`). Pinned as a **branch-following** submodule on `main`. Refresh with `git submodule update --remote modules/orama-website-v2`. |
 
 ## The blueprint
 
