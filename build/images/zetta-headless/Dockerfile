@@ -68,6 +68,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 COPY --from=build /src/build/bin/zetta /usr/local/bin/zetta
 
+# The Studio web app bundle (zetta#883): vendored in the zetta repo at
+# webapp/, baked here, seated via ZETTA_WEBAPP_DIR (an explicit --webapp-dir
+# wins). The node serves it at /studio/; its only data path is /v1.
+COPY --chown=zetta:zetta webapp /opt/zetta/webapp
+ENV ZETTA_WEBAPP_DIR=/opt/zetta/webapp
+
 USER zetta
 WORKDIR /data
 VOLUME ["/data"]
