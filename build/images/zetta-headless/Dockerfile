@@ -24,6 +24,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       ca-certificates wget gnupg lsb-release software-properties-common \
       build-essential cmake ninja-build git ccache lld \
       zlib1g-dev libssl-dev \
+      libpq-dev \
+      `# libpq-dev: the Postgres source connector (#892) links libpqxx on libpq.` \
       libx11-dev libxext-dev libxrandr-dev libxi-dev libxcursor-dev \
       libxfixes-dev libxkbcommon-dev libwayland-dev wayland-protocols \
       libgl1-mesa-dev libegl1-mesa-dev libdbus-1-dev libudev-dev \
@@ -61,7 +63,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Runtime libs only: OpenSSL 3 + the C++ runtime. (If `ldd` shows libc++, add libc++1-19/libc++abi1-19
 # from the LLVM channel — this first cut assumes the default libstdc++ toolchain.)
 RUN apt-get update && apt-get install -y --no-install-recommends \
-      libssl3 libstdc++6 ca-certificates \
+      libssl3 libstdc++6 libpq5 ca-certificates \
  && rm -rf /var/lib/apt/lists/* \
  && useradd -m -u 10001 -s /usr/sbin/nologin zetta \
  && mkdir -p /data && chown zetta:zetta /data
