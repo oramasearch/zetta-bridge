@@ -93,7 +93,7 @@ Orama Zetta is built **use-case-first**: each use case is a *generic AI-project 
 
 ### Full cross-repo URLs; no auto-close
 
-Reference issues/PRs in other repos by **full URL** (`https://github.com/oramasearch/zetta/issues/42`), never bare `#42`. **Never** use `fixes #N` / `closes #N` — issues stay open through validation; use `Related to <full URL>`. Priority labels are `p1`–`p4`.
+Reference issues/PRs in other repos by **full URL** (`https://github.com/oramasearch/zetta/issues/42`), never bare `#42`. **Never** use `fixes #N` / `closes #N` auto-close keywords; use `Related to <full URL>`. But **once you ship an issue's code (landed/pushed to its PR), manually close that issue** with a closing comment on what changed, and **keep the PR open for review** — solved work must not clutter the tracker (umbrella `CLAUDE.md` → "Close shipped tickets"). Priority labels are `p1`–`p4`.
 
 ### Submodules have their own commit flow
 
