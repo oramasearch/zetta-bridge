@@ -70,6 +70,24 @@ wiring that up requires lifting the posture + a net-new compare surface. Pinned 
 modules/orama-website-v2` pulls the latest; plain `--init` checks out the pinned
 commit). Read its own docs before editing.
 
+### `modules/agent-*` — the Python agent scaffold
+
+Private, **Python + uv** (never pip), one repo per agent, **sibling to `zetta`**. The bootstrap
+direction set 2026-08-07: build the agents in Python with frontier models, record the traces, and
+only then re-implement in C++ with our own models — comparing eval scores between the two.
+`agent-eval-generator` exists; the other four are planned.
+
+**Read [`docs/agent-scaffold.md`](docs/agent-scaffold.md) before touching any of them.** It owns
+the load-bearing definitions: what a **profile** is (a *situation* — role, responsibilities, the
+data they can reach — **plus the materialized data itself**, not a task or an intent), the
+**discovery vs capture** distinction that decides whether a task is supportable, and the five rules
+that make this a bootstrap rather than a demo (live node not mocks · tool surface derived from the
+node's OpenAPI · every run recorded as a trace including failures · grading by Zetta's
+deterministic graders, never a rubric or an LLM judge · evals generated, never hand-written).
+
+Sibling to `zetta` rather than inside `zetta/modules/`, which holds vendored third-party
+dependencies — the agents are first-party products that *call* the engine over `/v1`.
+
 ## The blueprint + sync model
 
 Orama Zetta is designed **blueprint-first**. The single source of truth is the **worktree-manager (wtm) project `ORAMA-ZETTA`** — 278 artifacts across 14 domains + their traceability relations. The blueprint is projected onto two **regenerable** surfaces:
