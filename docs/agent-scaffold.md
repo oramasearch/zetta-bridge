@@ -77,11 +77,36 @@ missing; or it is **discovered but not captured** → **"capture it first"**, no
 An agent that never declines builds something worthless when asked; one that declines when the
 answer is *capture it first* is just as wrong.
 
-**3. Data, schemas and records — materialized.** A profile is not a description of data. It
-**comes with the data**: real schemas and real records, generated and landed in Zetta as parquet
-partitions so the downstream agents work against something that actually exists. A profile whose
-tables cannot be queried cannot be used to grade anything — and generating it exercises the
-capture path, which is part of what the bootstrap is meant to prove.
+**3. Data, schemas and records.** A profile is not a description of data — it **comes with the
+data**: real schemas and real records, generated alongside the situation.
+
+**Profiles are an eval dataset, published to HuggingFace.** They are a *tool for evaluating models
+and agents*, not a fixture to be loaded into an engine. Loading a profile into Zetta is something
+we may do later; it is not what a profile is for, and building the loader first was a wrong turn
+taken on 2026-08-07.
+
+## What a profile is FOR — the evaluation chain
+
+```
+profile  ──►  Auto-Suggest model   ──►  a set of candidate TASKS
+                                             │
+profile + chosen intent  ──►  Project-creation agent  ──►  a Pipeline / Project
+```
+
+Two models are scored against the same profile, at different points:
+
+1. **Auto-Suggest** reads the profile and proposes the tasks worth doing. It is scored on whether
+   the set it proposes is the right set for *that* situation — which is why the role and its
+   constraints are part of the profile, and why the awkwardness has to live in the data rather than
+   in an annotation.
+2. **Project creation** takes the profile plus a chosen intent and builds the Pipeline. It is
+   scored on whether the Pipeline is correct and production-grade for that data.
+
+A profile therefore has to be **self-contained and portable**: situation, schemas, and records
+together, in a form a model can be evaluated against without a running Zetta node. That is what
+makes HuggingFace the right home for it — the same discipline as the corpora
+(`OramaSearch/base-agent-interaction-corpus`): private, versioned, and carrying a card that states
+its limitations rather than only its size.
 
 ### Describe the data neutrally
 
