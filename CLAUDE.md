@@ -88,7 +88,12 @@ deterministic graders, never a rubric or an LLM judge · evals generated, never 
 Sibling to `zetta` rather than inside `zetta/modules/`, which holds vendored third-party
 dependencies — the agents are first-party products that *call* the engine over `/v1`.
 
-**Creating one: use the [`new-agent`](.claude/skills/new-agent/SKILL.md) skill.** It carries the
+**Creating an eval profile: use the [`new-eval-profile`](.claude/skills/new-eval-profile/SKILL.md)
+skill.** Give it a seed — an industry, a role, a pain point — and it researches the rest, writes
+the situation, generates real records, and publishes to `OramaSearch/agent-eval-profiles`. Schema
+and field rules: [`modules/zetta/docs/agent/eval-profiles.md`](modules/zetta/docs/agent/eval-profiles.md).
+
+**Creating an agent: use the [`new-agent`](.claude/skills/new-agent/SKILL.md) skill.** It carries the
 procedure — private repo verified before pushing, uv not pip, the tool surface derived from the
 node's OpenAPI, traces recorded including failures, grading by deterministic graders — and the
 definition of done, which is eval scores rather than the agent existing.
