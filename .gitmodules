@@ -22,3 +22,6 @@
 [submodule "modules/agent-eval-generator"]
 	path = modules/agent-eval-generator
 	url = git@github.com:oramasearch/agent-eval-generator.git
+[submodule "modules/zetta-web-e2e"]
+	path = modules/zetta-web-e2e
+	url = git@github.com:oramasearch/zetta-web-e2e.git
