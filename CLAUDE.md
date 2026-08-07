@@ -88,6 +88,11 @@ deterministic graders, never a rubric or an LLM judge · evals generated, never 
 Sibling to `zetta` rather than inside `zetta/modules/`, which holds vendored third-party
 dependencies — the agents are first-party products that *call* the engine over `/v1`.
 
+**Creating one: use the [`new-agent`](.claude/skills/new-agent/SKILL.md) skill.** It carries the
+procedure — private repo verified before pushing, uv not pip, the tool surface derived from the
+node's OpenAPI, traces recorded including failures, grading by deterministic graders — and the
+definition of done, which is eval scores rather than the agent existing.
+
 ## The blueprint + sync model
 
 Orama Zetta is designed **blueprint-first**. The single source of truth is the **worktree-manager (wtm) project `ORAMA-ZETTA`** — 278 artifacts across 14 domains + their traceability relations. The blueprint is projected onto two **regenerable** surfaces:
