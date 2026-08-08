@@ -28,3 +28,6 @@
 [submodule "modules/agent-autosuggest-corpus"]
 	path = modules/agent-autosuggest-corpus
 	url = git@github.com:oramasearch/agent-autosuggest-corpus.git
+[submodule "modules/agent-project-corpus"]
+	path = modules/agent-project-corpus
+	url = git@github.com:oramasearch/agent-project-corpus.git

@@ -32,6 +32,7 @@ Each agent is its own **private repo**, added as a submodule under `zetta-bridge
 |---|---|
 | `agent-eval-generator` | 5 — eval profiles (the **test set**) |
 | `agent-autosuggest-corpus` | the **training set** for Auto-Suggest: profile → project profile |
+| `agent-project-corpus` | the training set for **the main agent**: project profile + intent → a Pipeline, built by **tool calls**, and mutated on request |
 | `agent-autosuggest-profile` | 1 — build the workspace profile |
 | `agent-autosuggest-tasks` | 2 — generate task options |
 | `agent-project-profile` | 3 — build the project profile |
@@ -143,6 +144,31 @@ An Auto-Suggest training example is `(profile → project profile)`, and that **
 the same shape the project-creation agent consumes**. Auto-Suggest proposes the approach; the
 project agent turns it into a Pipeline and chats about it. One shape means the two compose instead
 of needing a translation layer that can drift out of sync.
+
+## The main agent is tool-calling, so its corpus is trajectories
+
+`agent-project-corpus` trains the agent that builds and changes Pipelines. An example is a
+**trajectory** — `ask → call → observation → next call decided by that observation → Pipeline` —
+and every call after the first must name the observation that justified it. A call justified by the
+user's ask is a scripted step, and a scripted trajectory is a lookup with extra steps.
+
+**Mutations are half the corpus by construction.** Changing a Pipeline is the harder half of the
+product and the easier half to under-represent: *"add calibration to that"*, *"actually use the
+last 90 days"*, *"that ran too long"*. A mutation carries the pipeline **before**, because what
+must not change is as much of the lesson as what must — a mutation that silently rebuilds has lost
+the user's work.
+
+### SFT then RLVR, and the order is measured
+
+RLVR sharpens what a policy **already sometimes does**; it cannot originate a capability. A
+campaign against a policy that never emits a pipeline returns a uniformly zero reward, and a group
+with equal rewards has **zero advantage** — GRPO takes a null step and the run cannot learn however
+long it goes. That was measured
+([zetta#859](https://github.com/oramasearch/zetta/issues/859)), not assumed.
+
+So the corpus has one job: get the policy to *sometimes* build a correct pipeline. The loop takes
+it from there, and it works — reward rose 0.52 → 1.00 over 16 steps against the deterministic
+graders.
 
 ## What makes it a bootstrap rather than a demo
 
