@@ -75,7 +75,13 @@ commit). Read its own docs before editing.
 Private, **Python + uv** (never pip), one repo per agent, **sibling to `zetta`**. The bootstrap
 direction set 2026-08-07: build the agents in Python with frontier models, record the traces, and
 only then re-implement in C++ with our own models — comparing eval scores between the two.
-`agent-eval-generator` exists; the other four are planned.
+`agent-eval-generator` (eval profiles) and `agent-autosuggest-corpus` (Auto-Suggest SFT data)
+exist; the rest are planned.
+
+**Training data and eval data must never overlap.** The eval profiles are the *test set* for
+Auto-Suggest, so `agent-autosuggest-corpus` generates its own situations and refuses to start if it
+cannot load the eval set to check against — contamination would make every eval score a measurement
+of memory rather than reading.
 
 **Read [`docs/agent-scaffold.md`](docs/agent-scaffold.md) before touching any of them.** It owns
 the load-bearing definitions: what a **profile** is (a *situation* — role, responsibilities, the

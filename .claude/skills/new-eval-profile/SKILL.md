@@ -42,6 +42,24 @@ The user supplies a seed — an industry, a role, a company shape, a pain point,
 **Ask before inventing** anything that changes the answer — the person's authority, what they can
 act on, the regulatory posture. Those are the fields that decide what a good task set looks like.
 
+## 1b · Be curious. A cross-product is not diversity.
+
+Generating profiles by multiplying a few templates produces **one shape wearing many names** — the
+exact defect that made a 14,889-case corpus teach two pipeline shapes. **Every profile should
+surprise someone who read the last one.**
+
+Vary what changes the answer: the **industry** (a grain elevator co-op, a dialysis network, a
+municipal water utility — not B2B SaaS with different nouns) · **the shape of the mess** (three
+systems disagreeing about identity; clean data and nobody who can act on it; a column that
+silently changed meaning after a migration) · **the number of sources** (two tables, or fifteen
+across six systems where the question becomes *which things and in what order*, because one
+project's output is another's input) · **the person's authority** · and **whether a good answer
+exists at all** — a generator that always produces a solvable situation teaches that a solution
+always exists.
+
+If you produce a profile whose structure you have already produced, **stop and pick something
+further away.**
+
 ## 2 · Write the situation
 
 Role, tenure, what they are measured on, and **what they can actually act on**. Then connections
