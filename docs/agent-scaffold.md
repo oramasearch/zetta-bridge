@@ -33,10 +33,26 @@ Each agent is its own **private repo**, added as a submodule under `zetta-bridge
 | `agent-eval-generator` | 5 — eval profiles (the **test set**) |
 | `agent-autosuggest-corpus` | the **training set** for Auto-Suggest: profile → project profile |
 | `agent-project-corpus` | the training set for **the main agent**: project profile + intent → a Pipeline, built by **tool calls**, and mutated on request |
-| `agent-autosuggest-profile` | 1 — build the workspace profile |
-| `agent-autosuggest-tasks` | 2 — generate task options |
-| `agent-project-profile` | 3 — build the project profile |
-| `agent-project-build` | 4 — build the selected task |
+| `agent-autosuggest` | 1+2 — the **runtime** Auto-Suggest agent: a profile in, a project profile out |
+| `agent-project` | 3+4 — the **runtime** main agent: builds and changes Pipelines by calling tools |
+
+**The runtime agents have no model attached yet.** They run a frontier model with few-shot examples
+retrieved from the corpus modules above, which is the bootstrap the whole document describes: get a
+scaffold producing production-grade results first, then replace the frontier model with a trained
+one and compare. It also means the corpora are continuously exercised rather than sitting unread
+until a training run — a corpus nothing consumes is a corpus nobody notices is wrong.
+
+**Retrieval is over the SITUATION, never the answer.** Both agents match on industry, table names,
+column names, capture state, the intent and (for a change) the pipeline being changed — all things
+they are handed. Retrieving by the answer would show the model what it is supposed to conclude,
+which is leakage in the shape of a helpful prompt.
+
+**The solutions catalogue is injected as context, not exposed as a tool.** Reached through a tool it
+anchors every run on whatever came back first — the failure that made three eval-generator runs
+produce the same domain. It is also the vocabulary: without it the model invents plausible ids
+(`S-23` against a catalogue whose highest is `S-12`). A catalogue that cannot be built raises rather
+than returning empty, because an empty one makes the id check vacuously pass and the validator then
+reports an answer with invented ids as clean.
 
 **Sibling, not inside `zetta/modules/`.** That directory holds vendored third-party dependencies
 (`capy`, `corosio`, `automerge-cpp`, `beast2`, `libpqxx`, `oramacore-cpp`). The agents are

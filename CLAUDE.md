@@ -75,8 +75,16 @@ commit). Read its own docs before editing.
 Private, **Python + uv** (never pip), one repo per agent, **sibling to `zetta`**. The bootstrap
 direction set 2026-08-07: build the agents in Python with frontier models, record the traces, and
 only then re-implement in C++ with our own models — comparing eval scores between the two.
-`agent-eval-generator` (eval profiles) and `agent-autosuggest-corpus` (Auto-Suggest SFT data)
-exist; the rest are planned.
+Four data modules exist — `agent-eval-generator` (eval profiles), `agent-autosuggest-corpus` and
+`agent-project-corpus` (SFT data) — alongside two **runtime** agents, `agent-autosuggest` (a profile
+in, a project profile out) and `agent-project` (builds and changes Pipelines by calling tools).
+
+**The runtime agents have no model attached yet** — a frontier model plus few-shot examples
+retrieved from the corpora. Two rules they both hold to: retrieval matches on the **situation and
+never the answer** (matching the answer shows the model what it is supposed to conclude), and the
+solutions catalogue is **injected as context, not exposed as a tool** (a tool anchors every run on
+whatever it returned first, and without the catalogue the model invents ids like `S-23` against a
+catalogue whose highest is `S-12`).
 
 **Training data and eval data must never overlap.** The eval profiles are the *test set* for
 Auto-Suggest, so `agent-autosuggest-corpus` generates its own situations and refuses to start if it
