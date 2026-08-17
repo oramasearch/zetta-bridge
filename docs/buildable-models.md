@@ -10,6 +10,24 @@
 > · [`zetta/docs/product/catalog.md`](../modules/zetta/docs/product/catalog.md).
 > Those files are the truth; this page is a snapshot and goes stale — re-derive before quoting it.
 
+## 0. Terms used on this page — read this first
+
+| Term | Meaning |
+|---|---|
+| **Use case (UC-n) · methodology (M-n) · solution / module (S-n) · sketch (B-n)** | The *problem* (churn) · the *arranged AI methods* (extract → features → GBDT → SHAP → report) · the methodology *applied correctly for the real conditions and wired to the business action that realizes the value*, sold as a priced module · a solution specified only at sketch level. Cardinality: many use cases ≈ many solutions ≫ few methodologies (methods are reused across use cases) |
+| **Band A / B** | The plan's ROI tiers for use cases: **A** = largest risk-adjusted ROI, full 12-field spec · **B** = strong ROI, higher variance, sketched until a named condition justifies promotion |
+| **ROI contract · agent operating definition · data plan** | The three stages every module spec carries: the return named up front with the measurement design that proves it · what the customer's trained agent does autonomously vs with approval · the supply chain that turns operations into training data |
+| **Latency classes L1–L4** | **L1** batch (daily/weekly) · **L2** intraday · **L3** event-triggered, seconds · **L4** request-time, tens of ms, in the transaction path |
+| **Value lever** | One of five return classes: revenue lift · cost reduction · loss avoidance · working-capital release · risk reduction |
+| **GBDT · histogram GBDT** | Gradient-boosted decision trees — the workhorse model for tabular business data. "Histogram" = features are bucketed so training can be split across nodes and the per-node histograms summed (allreduce), giving single-node == multi-node results |
+| **Calibration (Platt / isotonic)** | Post-fitting so a predicted 20% really happens 20% of the time; two standard methods |
+| **TreeSHAP · reason codes** | Exact per-row attribution of a tree model's score to its features ("why is *this* account at risk"); surfaced to users as reason codes |
+| **Rank-at-risk / batch scoring** | Scoring every entity and sorting into an at-risk list |
+| **Held-out metrics · temporal split · backtest** | Measuring the model on rows it never trained on · splitting by *time* rather than randomly, so the model can't train on the future of its own test set · re-running the pipeline as-of past dates |
+| **Lag-feature forecaster** | A time-series model whose features are earlier values of the same series (yesterday, last week, rolling window) |
+| **Uplift · bandits · graph ML** | Modelling who *changes behaviour because of* a treatment · online algorithms that balance trying options vs exploiting the best one · models over relationships between entities (accounts↔devices↔merchants) |
+| **Correctness gate** | The product's pre-deploy check that a pipeline is leakage-free, point-in-time correct, and entity-resolved |
+
 Two different things get called "models" here, so both, from the catalogue itself.
 
 ## 1. The sellable modules — `04-solutions-catalog.md`

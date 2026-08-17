@@ -6,6 +6,8 @@ This is intentionally thin to start. Most reference content is **generated** and
 
 Per the documentation-discipline rule in [`CLAUDE.md`](../CLAUDE.md): when you add a subfolder here, give it its own `README.md`.
 
+**Explain jargon before use.** Bridge docs are read by people outside the plan-writing loop, so every page opens with a "Terms used on this page" section that defines the plan vocabulary (E[ROI], p(success), Band A/B, holdout, decision pool, data exhaust …), the buyer-side acronyms it relies on (DSO, LAE, OEE, SAIDI …), and any regulatory shorthand (SR 11-7, NAIC AIS, NERC CIP …) — *before* the body uses them. Inline, first use of a load-bearing term also gets a one-line gloss or a `(§0.n)` pointer. A reader should never have to leave the page to decode a term.
+
 - [`buildable-models.md`](buildable-models.md) — **what we can build in the solutions catalogue**:
   the twelve Band-A modules (S-1…S-12) + eight Band-B sketches from
   [`solutions-designs`](../modules/solutions-designs/docs/plan/04-solutions-catalog.md), the 21

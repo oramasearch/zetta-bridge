@@ -10,10 +10,105 @@
 > (per-module ROI contracts: levers, illustrative math, measurement design, buyer)
 > · [`06-financial-plan.md`](../modules/solutions-designs/docs/plan/06-financial-plan.md)
 > (how measured ROI becomes the price) · [`00-strategy-kernel.md`](../modules/solutions-designs/docs/plan/00-strategy-kernel.md)
-> (D1 calculus, D3 customers, D6 ROI contract, D8 ROI pricing).
+> (the kernel's decisions D1/D3/D6/D8 — glossed in §0 below).
 > Every dollar figure below is an **illustrative planning quantity** from those docs, not a
 > commitment; engagement-specific models replace them at contract time. Snapshot — re-derive
 > before quoting.
+
+---
+
+## 0. Terms used on this page — read this first
+
+The plan docs have their own vocabulary and lean on buyer-side acronyms from nine
+industries. Everything below is defined here before it is used; the body then uses the
+terms freely. Skim it once, come back to it as needed.
+
+### 0.1 Plan vocabulary
+
+| Term | Meaning |
+|---|---|
+| **The kernel · D1…D10** | `00-strategy-kernel.md`, the binding decision list every plan doc elaborates. **D1** the ROI calculus (`score = E[ROI] × p(success)`) · **D2** solutions are agent-operated (Auto-RL) · **D3** who the customers are · **D4** which use cases (Bands A/B/C, the anti-portfolio) · **D5** methodologies · **D6** every solution carries an ROI contract · **D7** data strategy · **D8** ROI-based pricing · **D9** metrics · **D10** principles |
+| **Use case (UC-n) · methodology (M-n) · solution / module (S-n) · sketch (B-n)** | The *problem* · the *arranged AI methods* · the methodology *applied correctly and wired to a business action*, sold as a priced module · a solution specified only at sketch level. See [`buildable-models.md`](buildable-models.md) for the lists |
+| **Band A / B / C · anti-portfolio** | The plan's ROI tiers for use cases (D4): **A** = largest risk-adjusted ROI, full spec · **B** = strong ROI, higher variance, sketch until a named condition is met · **C** = below the line. The **anti-portfolio** is what we deliberately don't sell — autonomous high-stakes decisions without human gates, and returns that can't be measured |
+| **E[ROI]** | Expected return on investment = expected return ÷ customer investment, where customer investment = module price + integration effort + data work + change cost (all four, not just our line) |
+| **p(success)** | The ex-ante probability the deployed module actually delivers that return, scored on five drivers: data availability & label quality · actionability (is there a business action to wire to?) · measurability · organizational adoption (is there a named owner?) · governance fit |
+| **The agent · Auto-RL** | The customer's own trained operator that *builds, runs, monitors, explains, improves* a module. **Auto-RL** = it is trained by reinforcement learning with the module's **measured ROI as the reward** (D7-2) |
+| **Autonomy classes A0–A3** | Governance settings the customer chooses per action class: **A0** draft only (human executes) · **A1** approval-gated (agent executes after a named human approves) · **A2** autonomous-under-audit (executes inside the policy envelope) · **A3** self-tuning (also adjusts thresholds inside pre-approved bounds) |
+| **Latency classes L1–L4** | **L1** batch (daily/weekly) · **L2** intraday · **L3** event-triggered, seconds · **L4** request-time, tens of ms, in the transaction path |
+| **Value lever / return class** | The five ways a module can produce return: **revenue lift · cost reduction · loss avoidance · working-capital release · risk reduction** |
+| **Decision pool** | The set of recurring decisions a module goes after, sized in dollars: frequency × value per decision. Example: "which customers do we try to save this month?" — 200k customers × 2%/month churn × $40 ARPU ≈ $21M/yr revenue at risk; that $21M is the churn pool. For a lender it's the delinquent receivables being worked; for a plant, the unplanned-downtime hours on covered assets; for a payments company, the transactions being approved or declined. Whoever owns the P&L of the pool is the **economic buyer** (§2); which pool dominates an account decides how it is segmented (§4.2) and what you land with |
+| **ROI contract** | Per module, agreed up front: value levers · illustrative ROI math · the **measurement design** that will prove the return · p(success) drivers and named risks |
+| **ROI readout** | The customer-visible dossier the module produces on a cadence — it simultaneously *proves* the return and *trues up* the price. Its sections are listed in §6.3 |
+| **True-up** | The annual settlement of the success-linked part of the price against the return the readout measured; runs both ways |
+| **Correctness gate** | The product's pre-deploy check that a pipeline is leakage-free, point-in-time correct, entity-resolved, calibrated, etc. Blocks with a stated reason |
+| **Leakage** | A feature that secretly contains the answer — e.g. "support tickets in the last 90 days" pulled from a live table that already includes the tickets a customer opened *because* they were leaving. Produces a model that looks brilliant offline and useless in production |
+| **Point-in-time** | Every feature computed only from data that existed as of the prediction date — never "latest value" |
+| **Entity resolution** | Matching records across systems (billing, CRM, telemetry, tickets) to the one unit the business can act on — customer vs account vs household vs asset |
+| **Reason codes** | The per-score, human-readable drivers shown next to a prediction ("usage −40% QoQ; 2 open P1 tickets") |
+| **Guardrail metrics** | The panel proving the win wasn't bought invisibly — complaints, margin, contact fatigue, cap adherence, fairness |
+| **System of record vs system of action** | Where the data *lives* (CRM, ERP, billing, claims, plant historian) vs where the acting team *works* and the module writes its scores/tasks/drafts (a CRM queue, a maintenance work order, a dialer, marketing automation) |
+| **Data exhaust · owned data exhaust** | The records a company generates *as a by-product of operating* — every bill, ticket, claim, sensor reading, CRM edit — sitting in its own systems of record. "Decision-grade" when the **outcomes** are recorded too (not just the leads, but whether each converted), so a training label can be built from it. "**Owned**" = theirs to train on: not rented, not scraped, not held by a vendor |
+| **Zero egress · in-environment · identity-scoped** | No customer data leaves the customer's infrastructure · the product runs on infrastructure the customer controls (cloud VPC, K8s, on-prem) · every user sees only what the customer's own SSO says they may |
+| **Connector** | The read/write integration between the module and a system of record/action (Salesforce, SAP, Zendesk, a CMMS…) |
+
+### 0.2 Measurement vocabulary
+
+| Term | Meaning |
+|---|---|
+| **Holdout · treated − holdout · incrementality** | A randomly chosen slice that receives *no* model-driven treatment. The return is what happened to the treated group minus what happened to the holdout — the **incremental** effect — never raw response. **Global holdout** = the same at whole-program level |
+| **Uplift · persuadables · sleeping dogs** | Modelling *who changes behaviour because of* a treatment. **Persuadables** respond only if treated; **sure things** were staying anyway; **sleeping dogs** are *harmed* by contact (reminded to cancel). Uplift targeting spends only on persuadables |
+| **Champion / challenger** | The incumbent strategy (champion) keeps running on part of the traffic while a candidate (challenger) runs on a randomized slice; the winner is decided on live results |
+| **Phased comparison · staggered starts** | Roll out by category / region / asset class at different times, so not-yet-started units act as controls when true randomization is impractical |
+| **Side-by-side validation** | The model's output shown next to the incumbent process (CSM intuition, an existing health score) *without* driving action yet — both an accuracy check and the adoption mechanism |
+| **FVA — forecast value added** | How much a forecast beats the incumbent process — a naive baseline, a statistical baseline, or planners' manual overrides. Can be negative |
+| **Exploration slice / quota / rate floor** | A small share of low-scored or random cases deliberately worked / sent / approved anyway, so the model keeps learning about cases it would otherwise never see and selection bias stays measurable |
+| **Below-the-line audit** | Sampling the cases the model *cleared* — auto-paid claims, un-alerted transactions — and re-checking them by hand to measure what it missed |
+| **Calibration** | Whether a predicted 20% really happens 20% of the time. Needed whenever the number (not just the ranking) drives money |
+| **Label · label window · blackout gap** | The outcome the model learns to predict; the time window after the prediction date in which the outcome counts; a buffer excluded so operational signals of the outcome (a non-renewal notice) don't leak into features |
+| **Auto-pause** | A guardrail breach (e.g. spam-complaint rate) that halts the action automatically |
+
+### 0.3 Buyer-side metrics and acronyms
+
+| Domain | Terms |
+|---|---|
+| **Subscription / revenue** | **ARR / ACV** annual recurring revenue / annual contract value · **NRR / GRR** net / gross revenue retention (does the installed base grow or shrink net of churn and expansion) · **CLV** customer lifetime value · **CAC** customer acquisition cost · **ARPU** average revenue per user · **PQL** product-qualified lead · **NPS** net promoter score · **BTYD** "buy till you die" — probabilistic models of non-contractual customers |
+| **Collections / finance** | **DSO** days sales outstanding (how long receivables take to become cash) · **roll rates** share of accounts sliding from one delinquency bucket to the next · **promises-kept / re-default** did the payment plan hold · **cost-to-collect** · **hardship detection** flagging vulnerable customers who must be treated differently · **charge-off** debt written off |
+| **Supply chain** | **MAPE** mean absolute percentage error (forecast accuracy) · **service level** share of demand met from stock · **turns** inventory turnover · **stockout / overstock** · **expedite** rush shipping to cover a miss · **S&OP** sales & operations planning · **safety stock** |
+| **Manufacturing / assets** | **OEE** overall equipment effectiveness · **PdM / PM** predictive / preventive maintenance · **catch rate** failures that were preceded by an alert · **historian** the plant's time-series sensor database · **MES / SCADA** manufacturing execution / supervisory control systems · **OT / IT** operational vs information-technology networks · **CMMS** the maintenance work-order system · **scrap / first-pass yield** · **run-to-failure** the no-PdM baseline |
+| **Payments / fraud / AML** | **bps** basis points (1 bp = 0.01% of volume) · **false declines** good transactions wrongly refused · **chargeback** a disputed card transaction reversed to the merchant · **challenge rate** share of transactions stepped up for extra verification · **PSP** payment service provider · **AML** anti-money-laundering · **SAR** suspicious activity report; **SAR yield** share of alerts that become filings · **KYC** know-your-customer checks |
+| **Insurance** | **LAE** loss adjustment expense (the cost of *handling* claims) · **STP** straight-through processing (auto-adjudicated, no human touch) · **leakage** (claims) money paid that shouldn't have been · **SIU** special investigations unit (the fraud team) · **indemnity** the claim payout itself · **FNOL** first notice of loss · **lapse** a policy not renewed · **loss ratio / combined ratio** claims (+ expenses) ÷ premium · **CAT** catastrophe events · **MGA** managing general agent · **CUO** chief underwriting officer |
+| **Utilities** | **SAIDI / SAIFI** average outage duration / frequency per customer · **AMI** advanced metering infrastructure (smart meters) · **T&D** transmission & distribution · **O&M** operations & maintenance · **rate case / prudency review** the regulatory proceeding where a utility justifies costs and prices · **load** electricity demand |
+| **Healthcare** | **RCM** revenue cycle management (a provider's billing + collections function) · **denials** payer refusals to pay claims · **prior auth** payer pre-approval for a procedure · **clean-claim rate** · **no-show** missed appointment · **PHI** protected health information · **HL7 / FHIR / X12** healthcare data-exchange standards · **CMIO** chief medical information officer |
+| **Retail / marketing** | **sell-through · markdown · promo lift · elasticity · same-store comps** merchandising metrics · **CDP** customer data platform · **MAP / ESP** marketing-automation / email platform · **CPQ** configure-price-quote (B2B quoting tool) · **geo-experiment** A/B by region · **PSA** public-service-announcement control ads |
+| **Sales / support** | **RevOps** revenue operations · **SDR / AE / CSM** sales development rep / account executive / customer success manager · **speed-to-lead** time to first response · **BANT** budget-authority-need-timeline qualification · **containment / deflection** support contacts resolved without a human — a vanity metric unless repeat-contact is measured |
+
+### 0.4 Regulatory and governance terms
+
+| Term | Meaning |
+|---|---|
+| **SR 11-7 · MRM · MRA** | US Fed/OCC model-risk guidance (model inventory, documentation, *independent validation / effective challenge*, ongoing monitoring) · the bank's Model Risk Management function that enforces it · "matter requiring attention", a formal examiner finding |
+| **GLBA · ECOA / FCRA · fair lending** | US customer-data safeguards law · credit anti-discrimination / consumer-reporting law and its adjacency |
+| **NAIC AI model bulletin · AIS program · DOI · market conduct** | US state insurance regulators' expectation of a written, auditable governance program for "AI systems"; adopted state-by-state · that program · a state Department of Insurance · the exam of how an insurer treats customers |
+| **HIPAA · BAA · minimum necessary · CMS** | US health-privacy law · business associate agreement (the contract that lets a vendor touch PHI) · the access-limitation rule · the US Medicare/Medicaid agency, whose rules set the prior-auth clock |
+| **NERC CIP** | Critical-infrastructure cybersecurity standards for utilities — a security perimeter operational data must stay inside |
+| **FDCPA / Reg F · CAN-SPAM / CASL · TCPA** | US debt-collection conduct rules · US / Canadian marketing-consent law · US telephone-contact law |
+| **GDPR / CCPA / PIPEDA · DPA · SOC 2 · FCA Consumer Duty · EU AI Act** | Privacy law (EU / California / Canada) · data processing agreement (contract terms about handling a customer's data, which flow down to *their* vendors) · a security-controls attestation · UK vulnerable-customer rules · the EU's risk-tiered AI regulation (employment decisions = high-risk) |
+| **Data residency vs AI sovereignty** | Data stays in-country vs control over data *and* infrastructure *and* operations *and* the model lifecycle (IDC's definition) |
+| **DPIA** | Data-protection impact assessment |
+
+### 0.5 Sales vocabulary
+
+| Term | Meaning |
+|---|---|
+| **Economic buyer · champion · outcome owner · validator** | Defined in §2 |
+| **ICP · anti-customer** | Ideal customer profile · the profile we decline, argued on p(success) (§4.3) |
+| **Landing module · attach · expansion map** | The first module sold · further modules on the same deployed foundation · the standing section of every readout proposing the next attach |
+| **Proof metric** | The one readout number, in the economic buyer's ledger units, that wins the renewal |
+| **Buying trigger** | The event that opens the conversation (an exam finding, an NRR miss, a downtime postmortem) |
+| **Workload placement · repatriation** | Choosing where each workload runs — often onto owned infrastructure rather than public cloud; the plan frames it as placement, never anti-cloud |
+| **The contraption · P1 archetype** | The champion's hand-built n8n / notebook / sidecar stack; the persona from the design-partner research (evidence 08) who owns it |
+| **Goodhart pressure** | A metric gets gamed once it becomes the target — why holdout integrity is contractual |
+| **Dual-audience readout** | The same ROI readout serving as renewal case *and* regulator-grade evidence |
 
 ---
 
@@ -23,12 +118,15 @@
 > **a governance requirement** — the three conditions under which risk-adjusted ROI is
 > largest (kernel D3; doc 05 §2.1).
 
-Each condition is a term of the scoring calculus `score = E[ROI] × p(success)` (kernel D1):
+In plain words: they make the same money-bearing decision over and over; the records of
+those decisions *and their outcomes* pile up in systems they own; and someone — a regulator,
+an auditor, a privacy office — constrains what may be done with that data. Each condition is a
+term of the scoring calculus `score = E[ROI] × p(success)` (kernel D1; §0.1):
 
 | Condition | What it looks like inside the account | Which term it drives | Why it is non-negotiable |
 |---|---|---|---|
 | **Recurring, high-value decisions** | The same decision made hundreds-to-millions of times per period with dollars attached: which account to save, which invoice to chase, which claim to route, which asset to service, which price to quote | **E[ROI] numerator** — frequency × per-decision value = the pool a module can address | One-off decisions can't repay an agent-operated system; a decision made continuously can be *measured* continuously — and measurement is the ROI readout, the price basis, and the agent's reward signal at once |
-| **Owned data exhaust** | Systems of record producing decision-grade history as a by-product of operating — CRM, ERP, billing, telemetry, tickets, claims, sensors — with the *outcomes* recorded, not just the inputs | **p(success)** (data availability + label quality are its first two drivers) and the agent's training supply chain (D7) | An agent trained on the customer's own data *is* the product; no exhaust ⇒ nothing to train on ⇒ rented inference, which is the anti-portfolio |
+| **Owned data exhaust** (§0.1) | Systems of record producing decision-grade history as a by-product of operating — CRM, ERP, billing, telemetry, tickets, claims, sensors — with the *outcomes* recorded, not just the inputs | **p(success)** (data availability + label quality are its first two drivers) and the agent's training supply chain (D7) | An agent trained on the customer's own data *is* the product; no exhaust ⇒ nothing to train on ⇒ rented inference, which is the anti-portfolio |
 | **A governance requirement** | A regulator, examiner, auditor, privacy office, or board policy that constrains where data may go, who may act on it, what must be evidenced | **p(success)** (governance fit) and **differentiation** | The harder the account's governance, the fewer alternatives survive procurement; identity-scoped, audited, in-environment, approval-gated reads as *the compliance posture itself* |
 
 Two corollaries: **industry is a proxy, the conditions are the test** (a mid-market logistics
