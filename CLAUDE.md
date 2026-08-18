@@ -95,7 +95,7 @@ Auto-Suggest, so `agent-autosuggest-corpus` generates its own situations and ref
 cannot load the eval set to check against — contamination would make every eval score a measurement
 of memory rather than reading.
 
-**Read [`docs/agent-scaffold.md`](docs/agent-scaffold.md) before touching any of them.** It owns
+**Read [`docs/agents/scaffold.md`](docs/agents/scaffold.md) before touching any of them.** It owns
 the load-bearing definitions: what a **profile** is (a *situation* — role, responsibilities, the
 data they can reach — **plus the materialized data itself**, not a task or an intent), the
 **discovery vs capture** distinction that decides whether a task is supportable, and the five rules
@@ -159,10 +159,33 @@ When you touch files in a folder, update that folder's `README.md` (create it on
 
 Do not use the auto-memory system in this project. Memory lives on the local machine, not in git, so it isn't reproducible across contributors / agents / fresh checkouts. Durable rules go in this `CLAUDE.md` (repo-wide), a skill's `SKILL.md` (workflow), or the relevant folder's `README.md` (folder-scoped). When asked to "remember X", update the right reproducible doc and say what changed.
 
+## Docs — the fuller explanations
+
+This file is the jump-table and stays short. Anything needing more than a paragraph lives in
+[`docs/`](docs/), one folder per topic.
+
+| Topic | Read when |
+|---|---|
+| [`docs/solutions/`](docs/solutions/) | **What we can build and who wants it.** [`buildable-models.md`](docs/solutions/buildable-models.md) — the twelve Band-A modules S-1…S-12, eight Band-B sketches, the 21 methods behind them, and what the engine actually trains today. [`buyers-and-roi.md`](docs/solutions/buyers-and-roi.md) — the customer thesis, the industry map by ROI fit, and per module the buyer, metrics and measurement design. ⚠️ Internal-confidential |
+| [`docs/agents/`](docs/agents/) | The Python agent scaffold — profiles, discovery vs capture, traces, evals, the bootstrap sequence |
+| [`docs/blueprint/`](docs/blueprint/) | The wtm blueprint export the docs site and GitHub issues are generated from |
+
+**The through-line worth knowing:** the solutions catalogue prices every module on **measured**
+ROI — incremental effect against a holdout, in the buyer's ledger units, never raw response. That
+is the same sentence as the company's own value event in
+[`orama-business-model`](https://github.com/oramasearch/orama-business-model). The product thesis
+and the company objective are one idea stated twice.
+
+**And the standing caution:** the catalogue is a *plan*. Its S-n modules specify uplift, bandits,
+graph, vision and document models the engine does not have.
+[`buildable-models.md`](docs/solutions/buildable-models.md) §3 is the reconciliation — read it
+before quoting a capability. Reading a design statement as an engine statement is the failure that
+has recurred most often in this repo's documentation, including in this file.
+
 ## Layout
 
-- `modules/<name>/` — git submodules (the Orama Zetta product repo + the docs site). See **Modules** above.
-- `docs/` — cross-module bridge docs (see [`docs/README.md`](docs/README.md)).
+- `modules/<name>/` — git submodules (the Orama Zetta platform repo + the docs site). See **Modules** above.
+- `docs/` — cross-module bridge docs, one folder per topic (see [`docs/README.md`](docs/README.md)).
 
 ## Related
 

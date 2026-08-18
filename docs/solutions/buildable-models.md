@@ -1,13 +1,13 @@
 # What we can build in the Zetta solutions catalogue
 
-> **Status:** captured 2026-08-17 · spans [`modules/solutions-designs`](../modules/solutions-designs/)
-> (the catalogue) and [`modules/zetta`](../modules/zetta/) (the engine that has to run it).
+> **Status:** captured 2026-08-17 · spans [`modules/solutions-designs`](../../modules/solutions-designs/)
+> (the catalogue) and [`modules/zetta`](../../modules/zetta/) (the engine that has to run it).
 > ⚠️ Inherits the **internal-confidential** classification of the plan docs it summarises.
 >
-> **Sources:** [`solutions-designs/docs/plan/04-solutions-catalog.md`](../modules/solutions-designs/docs/plan/04-solutions-catalog.md)
-> · [`solutions-designs/docs/plan/03-methodology-portfolio.md`](../modules/solutions-designs/docs/plan/03-methodology-portfolio.md)
-> · [`zetta/src/core/ml/`](../modules/zetta/src/core/ml/) + [`zetta/docs/ml/README.md`](../modules/zetta/docs/ml/README.md)
-> · [`zetta/docs/product/catalog.md`](../modules/zetta/docs/product/catalog.md).
+> **Sources:** [`solutions-designs/docs/plan/04-solutions-catalog.md`](../../modules/solutions-designs/docs/plan/04-solutions-catalog.md)
+> · [`solutions-designs/docs/plan/03-methodology-portfolio.md`](../../modules/solutions-designs/docs/plan/03-methodology-portfolio.md)
+> · [`zetta/src/core/ml/`](../../modules/zetta/src/core/ml/) + [`zetta/docs/ml/README.md`](../../modules/zetta/docs/ml/README.md)
+> · [`zetta/docs/product/catalog.md`](../../modules/zetta/docs/product/catalog.md).
 > Those files are the truth; this page is a snapshot and goes stale — re-derive before quoting it.
 
 ## 0. Terms used on this page — read this first

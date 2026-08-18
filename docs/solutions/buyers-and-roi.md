@@ -4,12 +4,12 @@
 > (which lists *what* is in the catalogue; this page is *who buys it and why*).
 > ⚠️ Inherits the **internal-confidential** classification of the plan docs it summarises.
 >
-> **Sources:** [`solutions-designs/docs/plan/05-industries-and-gtm.md`](../modules/solutions-designs/docs/plan/05-industries-and-gtm.md)
+> **Sources:** [`solutions-designs/docs/plan/05-industries-and-gtm.md`](../../modules/solutions-designs/docs/plan/05-industries-and-gtm.md)
 > (customer thesis, buying group, industry map, segmentation, anti-customer, commercial motion)
-> · [`04-solutions-catalog.md`](../modules/solutions-designs/docs/plan/04-solutions-catalog.md)
+> · [`04-solutions-catalog.md`](../../modules/solutions-designs/docs/plan/04-solutions-catalog.md)
 > (per-module ROI contracts: levers, illustrative math, measurement design, buyer)
-> · [`06-financial-plan.md`](../modules/solutions-designs/docs/plan/06-financial-plan.md)
-> (how measured ROI becomes the price) · [`00-strategy-kernel.md`](../modules/solutions-designs/docs/plan/00-strategy-kernel.md)
+> · [`06-financial-plan.md`](../../modules/solutions-designs/docs/plan/06-financial-plan.md)
+> (how measured ROI becomes the price) · [`00-strategy-kernel.md`](../../modules/solutions-designs/docs/plan/00-strategy-kernel.md)
 > (the kernel's decisions D1/D3/D6/D8 — glossed in §0 below).
 > Every dollar figure below is an **illustrative planning quantity** from those docs, not a
 > commitment; engagement-specific models replace them at contract time. Snapshot — re-derive
