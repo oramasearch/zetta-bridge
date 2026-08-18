@@ -4,6 +4,9 @@
 > (which lists *what* is in the catalogue; this page is *who buys it and why*).
 > ⚠️ Inherits the **internal-confidential** classification of the plan docs it summarises.
 >
+> **Revised 2026-08-17** after reading the full catalogue: added §7 (the three tensions that
+> change what a buyer is told) and §8 (bundles, and why the expansion argument is structural).
+>
 > **Sources:** [`solutions-designs/docs/plan/05-industries-and-gtm.md`](../../modules/solutions-designs/docs/plan/05-industries-and-gtm.md)
 > (customer thesis, buying group, industry map, segmentation, anti-customer, commercial motion)
 > · [`04-solutions-catalog.md`](../../modules/solutions-designs/docs/plan/04-solutions-catalog.md)
@@ -343,7 +346,45 @@ treated as churn risk on our own book.
 
 ---
 
-## 7. What this means for the engine today
+## 7. The seven open tensions the plan itself flags
+
+Appendix A of the catalogue records frictions the authors could not resolve, with the
+kernel-conservative reading applied until each is settled. **Three of them change what a buyer is
+told**, so they belong here rather than buried:
+
+| # | Tension | Why a seller needs to know |
+|---|---|---|
+| **T-3** | **Label physics vs true-up cadence.** For churn (90-day windows), collections and CLV (multi-cycle), and credit (vintages), the complete incrementality readout matures **one or more quarters after actions begin** | The contract's true-up cadence must **match its label cadence**. Leading indicators are reported but **never billed on**. Promising a quarterly true-up on a 90-day label is promising a number that cannot exist yet |
+| **T-5** | **The measured-ROI reward can be gamed.** Training agents on the ROI signal risks Goodhart effects where the measurement design is weak — S-7's forecast honesty, ticket triage's deflection theatre | The convention: **the reward always carries the guardrail penalty inside it.** Collections' complaint-weighted reward is the pattern. And "measurement-design strength" becomes an explicit p(success) factor |
+| **T-6** | **Risk-reduction value that never cashes.** Fraud-loss avoidance and exposure-day reduction are real returns the customer's P&L only ever shows as an **absence** | Measured against modelled counterfactual baselines. Champion/challenger makes this rigorous for fraud; it is weaker elsewhere. Do not promise a P&L line that will not appear |
+
+The other four are internal: Band membership for CLV and replenishment (T-1), UC numbering (T-2),
+autonomy-class defaults (T-4), and the re-admission of request-time latency (T-7).
+
+### T-4's three cross-cutting autonomy rules
+
+Proposed as company-wide defaults, and worth knowing because they cut across every module:
+
+1. **Contact may be A2; concessions are A1.**
+2. **Payment-direction automation may be A2; denial-direction decisions never are.**
+3. **A3 exists only inside pre-approved bounds, with per-change ROI logging.**
+
+Rule 2 is the sharpest — it is why claims triage can auto-pay a fast-track claim but can never
+auto-deny one.
+
+## 8. The commercial shape: bundles, not modules
+
+Buyers do not buy S-4. They buy a family that shares one wiring — see
+[`buildable-models.md`](buildable-models.md) §5. What matters for the buyer conversation:
+
+**The first module pays for the foundation; every later one is cheaper while its return holds.**
+That is the whole expansion argument, and it is a structural fact about the architecture rather
+than a discount. The bundle a buyer lands in is set by which decision pool dominates them (§4.2),
+and the attach path is already mapped in §6.3.
+
+---
+
+## 9. What this means for the engine today
 
 Cross-reference [`buildable-models.md`](buildable-models.md) §3: the engine's native
 trainer is a histogram GBDT + calibration + TreeSHAP + scoring + a lag-feature forecaster,
