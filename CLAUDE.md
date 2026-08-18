@@ -6,7 +6,7 @@
 
 **How it works — one flow:** *Ingest* (plain language + the artifacts you already have) → *Architect* (compile a correct execution graph, validated before it runs) → *Deploy* (one button onto your target; your data never leaves) → *Run* (and, once the per-customer training path ships, learn). Why it's different: it **trains models natively** on your infrastructure rather than running inference over a rented model, is **correct by construction** (every graph passes a correctness gate before deploy), runs **compute-near-data** with hot→cold→re-warm tiered storage, and is **governed self-serve** (in your environment, identity-scoped, audited).
 
-**Orama Studio is the product; Orama Zetta is the engine underneath.** Studio is the human surface — the rebrand and rebuild of what was Amaro Desktop, announced to a customer on 2026-07-27. `oramasearch/zetta` is the **engine** repo; the older name *"ZettaDB"* is **retired** and `zetta` is the repo/binary codename.
+**Orama Zetta is the platform. Orama Studio is the UI that sits on it.** The platform is the product — storage, indexes, native training, execution, clustering, deploy. Studio is the human surface over it, and is the rebrand and rebuild of what was Amaro Desktop (announced to a customer on 2026-07-27). `oramasearch/zetta` is the platform repo; the older name *"ZettaDB"* is **retired** and `zetta` is the repo/binary codename.
 
 **What runs today** (verified against a running node, 2026-07-25/26 — see [`motive-delivery/demo-script.md`](https://github.com/oramasearch/orama-bridge/blob/main/docs/projects/motive-delivery/demo-script.md)): the whole path **intent → Pipeline → Verify → Deploy → Run → ranked scores + drivers → act**, with lineage, trace and audit on every step · a churn model at **AUC 0.880 / accuracy 0.828** on 500 accounts with native TreeSHAP drivers · entity resolution correct at division level · n8n import and compile · native synthetic data generation · distributed search · **native GPU training measured on an A100** · and the **read surface across the web app live, not fixtures**.
 
@@ -22,9 +22,9 @@ A bridge has **no build, no runtime, no tests** of its own. The real code lives 
 
 Each module has (or will have) its own `CLAUDE.md` / `README.md` — **read those first** before editing inside a module.
 
-### `modules/zetta` — Orama Zetta (the engine; Studio is the product surface over it)
+### `modules/zetta` — Orama Zetta (the platform; Studio is the UI on it)
 
-Private, **C++26**. The **engine** repo — Studio's product docs live in `docs/product/` and the GUI docs in `docs/gui/` here. **Under the hood today:** an equal-peer, **CRDT-replicated** store (from-scratch C++ Automerge, ~90M ops/sec on 30 cores), JSONL on-disk storage + large objects, a Postgres-SQL **subset** parser on a dialect-neutral AST, coroutine-native networking (Corosio), and **headed** (SDL3 + Dear ImGui — the desktop is itself a cluster member) + **headless** modes. `CMakeLists.txt` build; has its own `CLAUDE.md`. **In flight (not yet built):** tiered storage, compute-near-data (embedded Lua/Orly + DDF API), Postgres wire protocol, and the **learning loop** (per-customer training). The GUI/control plane, indexing, distributed search and k8s deploy have since landed — see the verified list above. Imported from `homer6/zetta`.
+Private, **C++26**. The **platform** repo — product docs in `docs/product/`, the Studio UI docs in `docs/gui/`. **Under the hood today:** an equal-peer, **CRDT-replicated** store (from-scratch C++ Automerge, ~90M ops/sec on 30 cores), JSONL on-disk storage + large objects, a Postgres-SQL **subset** parser on a dialect-neutral AST, coroutine-native networking (Corosio), and **headed** (SDL3 + Dear ImGui — the desktop is itself a cluster member) + **headless** modes. `CMakeLists.txt` build; has its own `CLAUDE.md`. **In flight (not yet built):** tiered storage, compute-near-data (embedded Lua/Orly + DDF API), Postgres wire protocol, and the **learning loop** (per-customer training). The GUI/control plane, indexing, distributed search and k8s deploy have since landed — see the verified list above. Imported from `homer6/zetta`.
 
 ### `modules/zetta-docs` — the blueprint docs website
 
@@ -166,6 +166,6 @@ Do not use the auto-memory system in this project. Memory lives on the local mac
 
 ## Related
 
-- [`oramasearch/zetta`](https://github.com/oramasearch/zetta) — Orama Zetta, the **engine** + the blueprint's tracking issues.
+- [`oramasearch/zetta`](https://github.com/oramasearch/zetta) — Orama Zetta, the **platform** + the blueprint's tracking issues.
 - [`oramasearch/zetta-docs`](https://github.com/oramasearch/zetta-docs) — the docs site source.
 - `amaro-bridge` — the sibling bridge where the `zetta-sync` skill + the originating product/blueprint context (`docs/projects/orama-platform-2/`) currently live. Kept separate by design.
