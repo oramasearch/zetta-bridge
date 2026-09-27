@@ -115,14 +115,28 @@ and field rules: [`modules/zetta/docs/agent/eval-profiles.md`](modules/zetta/doc
 created private **before** its first image push, with the anonymous 404 check after (Steve,
 2026-09-26; the org rule in the umbrella `CLAUDE.md`). A first push otherwise creates it **public**.
 
-**Agents in lake (the Agents epic, https://github.com/oramasearch/lake/issues/228).** lake's Train → Agents launches
-both native Zetta agents and Python agents. Python agents run on **one blank image,
-`agent-runtime`**, which loads an agent's instructions and code from Zetta (the `AgentRecord`,
-`runtime: python`) or a lake repository at a pinned revision. So a *new agent* is a definition,
-not a repo or an image. The existing runtime agents (`agent-project`, `agent-autosuggest`) run on it
-unmodified. **AgentCreator** (`agent-creator`), on the OpenAI SDK, is the Agent Factory that writes
-new definitions. Both new repos are modules here: https://github.com/oramasearch/zetta/issues/1016,
-https://github.com/oramasearch/zetta/issues/1017. Python agents use **one general Orama OpenAI key**.
+**Agents in lake (the Agents epic, https://github.com/oramasearch/lake/issues/228).** Exposed the way
+the Zetta web UI (Studio, orama-design `src/studio/`) designs it, with two families that must not
+be conflated:
+
+- **Specialized Orama agents**, each its own repo and private image. **Ask Orama**
+  (`agent-ask-orama`, https://github.com/oramasearch/zetta/issues/1018) is the **general agent for
+  all of lake**: a panel on every page that acts as the signed-in person and can **delegate to any
+  agent as a subagent, including user-created ones**. `agent-project` (builds and changes
+  Pipelines: *Create a Solution*) and `agent-autosuggest` (Workspace Profile → *Discover
+  Opportunities*) are the others. They are **not** run on `agent-runtime`.
+- **Custom agents**, which people build in lake's **Train → Agents** (Studio's shape: purpose, work
+  area, manifesto, goal, skills, model, trigger), by form or with the **Agent Factory**
+  (**AgentCreator**, `agent-creator`, OpenAI SDK). They are native (the Orama base model in Zetta,
+  on GPU or CPU) or Python on **one blank image, `agent-runtime`**, which loads their instructions
+  and code from Zetta or a lake repository. So a new custom agent is a definition, never a repo or an
+  image.
+
+Conversation happens in Ask Orama; Train → Agents is for building agents and reading what the
+unattended ones did. Every agent reaches a workspace's Zetta **through lake**, never with the admin
+token, and can call **approved Pipelines as tools**
+(https://github.com/oramasearch/lake/issues/238). Python agents use **one general Orama OpenAI
+key**.
 
 **Creating an agent: use the [`new-agent`](.claude/skills/new-agent/SKILL.md) skill.** It carries the
 procedure — private repo verified before pushing, uv not pip, the tool surface derived from the
