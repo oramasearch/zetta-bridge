@@ -79,7 +79,8 @@ commit). Read its own docs before editing.
 Private, **Python + uv** (never pip), one repo per agent, **sibling to `zetta`**. The bootstrap
 direction set 2026-08-07: build the agents in Python with frontier models, record the traces, and
 only then re-implement in C++ with our own models — comparing eval scores between the two.
-Four data modules exist — `agent-eval-generator` (eval profiles), `agent-autosuggest-corpus` and
+The lake-facing agents are modules here too: `agent-runtime`, `agent-ask-orama` and
+`agent-creator` (see *Agents in lake* below). Four data modules exist — `agent-eval-generator` (eval profiles), `agent-autosuggest-corpus` and
 `agent-project-corpus` (SFT data) — alongside two **runtime** agents, `agent-autosuggest` (a profile
 in, a project profile out) and `agent-project` (builds and changes Pipelines by calling tools).
 

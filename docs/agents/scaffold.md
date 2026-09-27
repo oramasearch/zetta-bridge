@@ -23,7 +23,7 @@ four rounds of hand-authored corpus produced four narrow fixes and no broad gain
 before any of it, still had the best turn-1 behaviour.** Recording what a frontier model actually
 does removes the guessing that failed four times.
 
-## The five agents — one module each
+## The agents — one module each
 
 Each agent is its own **private repo**, added as a submodule under `zetta-bridge/modules/`,
 **sibling to `zetta`**.
@@ -35,6 +35,9 @@ Each agent is its own **private repo**, added as a submodule under `zetta-bridge
 | `agent-project-corpus` | the training set for **the main agent**: project profile + intent → a Pipeline, built by **tool calls**, and mutated on request |
 | `agent-autosuggest` | 1+2 — the **runtime** Auto-Suggest agent: a profile in, a project profile out |
 | `agent-project` | 3+4 — the **runtime** main agent: builds and changes Pipelines by calling tools |
+| `agent-runtime` | the **blank Python agent** that runs every user-created agent in lake: loads its definition from Zetta or a lake repository, tools derived from lake's filtered OpenAPI and its skills ([zetta#1016](https://github.com/oramasearch/zetta/issues/1016)) |
+| `agent-ask-orama` | **Ask Orama**, the general agent for all of lake: reads as the person, proposes every change, delegates to any agent ([zetta#1018](https://github.com/oramasearch/zetta/issues/1018)) |
+| `agent-creator` | **AgentCreator**, the Agent Factory's agent: a definition on `agent-runtime` that proposes new agents and creates nothing ([zetta#1017](https://github.com/oramasearch/zetta/issues/1017)) |
 
 **The runtime agents have no model attached yet.** They run a frontier model with few-shot examples
 retrieved from the corpus modules above, which is the bootstrap the whole document describes: get a

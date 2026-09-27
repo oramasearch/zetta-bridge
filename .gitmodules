@@ -37,3 +37,12 @@
 [submodule "modules/agent-project"]
 	path = modules/agent-project
 	url = git@github.com:oramasearch/agent-project.git
+[submodule "modules/agent-runtime"]
+	path = modules/agent-runtime
+	url = git@github.com:oramasearch/agent-runtime.git
+[submodule "modules/agent-ask-orama"]
+	path = modules/agent-ask-orama
+	url = git@github.com:oramasearch/agent-ask-orama.git
+[submodule "modules/agent-creator"]
+	path = modules/agent-creator
+	url = git@github.com:oramasearch/agent-creator.git
