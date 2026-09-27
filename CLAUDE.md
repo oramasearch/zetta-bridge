@@ -139,6 +139,13 @@ token, and can call **approved Pipelines as tools**
 (https://github.com/oramasearch/lake/issues/238). Python agents use **one general Orama OpenAI
 key**.
 
+**Making a solution or methodology actually run: use the
+[`add-solution-module`](.claude/skills/add-solution-module/SKILL.md) skill.** The engine trains M-1
+(GBDT) and part of M-10 today; every other methodology is an issue under
+[zetta#984](https://github.com/oramasearch/zetta/issues/984) (zetta#1041-#1060, the registry
+zetta#1061, featurization zetta#1062). The skill carries the whole path: Zetta trainer, registry,
+compiler shape, run path, gate checks, lake, and every agent that designs or teaches pipelines.
+
 **Creating an agent: use the [`new-agent`](.claude/skills/new-agent/SKILL.md) skill.** It carries the
 procedure — private repo verified before pushing, uv not pip, the tool surface derived from the
 node's OpenAPI, traces recorded including failures, grading by deterministic graders — and the
