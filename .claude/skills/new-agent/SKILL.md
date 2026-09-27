@@ -42,6 +42,23 @@ gh repo create oramasearch/agent-<name> --private \
 gh repo view oramasearch/agent-<name> --json visibility   # verify BEFORE pushing anything
 ```
 
+**And its private Docker Hub repository, same name.** Every agent repo publishes to its own
+`oramasearch/agent-<name>` on Docker Hub (Steve, 2026-09-26). A first push **creates a Hub repo
+public** by default, so create it private **before** any image is pushed, then prove it:
+
+```sh
+# create private (Hub API, with a Hub token for the oramasearch org)
+curl -s -X POST https://hub.docker.com/v2/repositories/ -H "Authorization: Bearer $HUB_TOKEN" \
+  -H 'Content-Type: application/json' \
+  -d '{"namespace":"oramasearch","name":"agent-<name>","is_private":true}'
+# after every push to a new name: anonymous read must be 404
+curl -s -o /dev/null -w '%{http_code}' https://hub.docker.com/v2/repositories/oramasearch/agent-<name>/
+```
+
+Agents created by the Agent Factory (lake#228) are **definitions** that run on
+`oramasearch/agent-runtime`. They get no repo and no image of their own. This step is for agent
+**repos** only.
+
 ## 2 · Scaffold with uv — never pip
 
 ```sh

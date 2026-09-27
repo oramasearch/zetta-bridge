@@ -111,6 +111,19 @@ skill.** Give it a seed — an industry, a role, a pain point — and it researc
 the situation, generates real records, and publishes to `OramaSearch/agent-eval-profiles`. Schema
 and field rules: [`modules/zetta/docs/agent/eval-profiles.md`](modules/zetta/docs/agent/eval-profiles.md).
 
+**Every agent repo has a private Docker Hub repository of the same name** (`oramasearch/agent-<name>`),
+created private **before** its first image push, with the anonymous 404 check after (Steve,
+2026-09-26; the org rule in the umbrella `CLAUDE.md`). A first push otherwise creates it **public**.
+
+**Agents in lake (the Agents epic, https://github.com/oramasearch/lake/issues/228).** lake's Train → Agents launches
+both native Zetta agents and Python agents. Python agents run on **one blank image,
+`agent-runtime`**, which loads an agent's instructions and code from Zetta (the `AgentRecord`,
+`runtime: python`) or a lake repository at a pinned revision. So a *new agent* is a definition,
+not a repo or an image. The existing runtime agents (`agent-project`, `agent-autosuggest`) run on it
+unmodified. **AgentCreator** (`agent-creator`), on the OpenAI SDK, is the Agent Factory that writes
+new definitions. Both new repos are modules here: https://github.com/oramasearch/zetta/issues/1016,
+https://github.com/oramasearch/zetta/issues/1017. Python agents use **one general Orama OpenAI key**.
+
 **Creating an agent: use the [`new-agent`](.claude/skills/new-agent/SKILL.md) skill.** It carries the
 procedure — private repo verified before pushing, uv not pip, the tool surface derived from the
 node's OpenAPI, traces recorded including failures, grading by deterministic graders — and the
