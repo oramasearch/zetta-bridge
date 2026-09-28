@@ -46,3 +46,6 @@
 [submodule "modules/agent-creator"]
 	path = modules/agent-creator
 	url = git@github.com:oramasearch/agent-creator.git
+[submodule "modules/agent-application"]
+	path = modules/agent-application
+	url = git@github.com:oramasearch/agent-application.git
