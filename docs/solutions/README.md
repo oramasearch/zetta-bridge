@@ -6,7 +6,7 @@ portfolio plan authored by the combined executive team. ⚠️ **Internal-confid
 
 | Doc | Answers |
 |---|---|
-| [`buildable-models.md`](buildable-models.md) | **What** — the twelve Band-A modules (S-1…S-12), eight Band-B sketches, the 21 methods in six families behind them, and what the engine actually trains today |
+| [`buildable-models.md`](buildable-models.md) | **What** — the twelve Band-A modules (S-1…S-12), eight Band-B sketches, the 21 methods in six families behind them, and what the engine actually trains today. The catalogue now runs to **S-23** (S-13…S-23 added 2026-10-09 — two Band A, nine Band B); this page has not yet been re-derived for them |
 | [`buyers-and-roi.md`](buyers-and-roi.md) | **Who and why** — the three-condition customer thesis, the buying group, the industry map by ROI fit, and per module the buyer, value lever, metrics and the measurement design that turns a metric into an ROI number |
 
 ## The one thing to carry away

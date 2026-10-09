@@ -9,6 +9,13 @@
 > · [`zetta/src/core/ml/`](../../modules/zetta/src/core/ml/) + [`zetta/docs/ml/README.md`](../../modules/zetta/docs/ml/README.md)
 > · [`zetta/docs/product/catalog.md`](../../modules/zetta/docs/product/catalog.md).
 > Those files are the truth; this page is a snapshot and goes stale — re-derive before quoting it.
+>
+> **Stale as of 2026-10-09:** the catalogue added **S-13…S-23** (Automatic Quoting, Field-Service
+> Dispatch & First-Time Fix, Labor Forecasting & Shift Scheduling, Recovery Audit, Revenue Leakage
+> Detection, Warranty & Field-Quality Early Warning, Scrap, Yield & Process Optimization, Delivery
+> Date Promise, Construction Estimating & Bid Intelligence, Freight & Supplier Quoting, Marketing
+> Mix Modeling — 04 §16–§26). This page still covers S-1…S-12 only; its section references into 04
+> were updated to the renumbered sketches (§27) and syntheses (§28).
 
 ## 0. Terms used on this page — read this first
 
@@ -59,7 +66,7 @@ Two different things get called "models" here, so both, from the catalogue itsel
 ## 4. The shared foundation — the part that actually is the product
 
 **This is the most load-bearing section of the catalogue and the easiest to miss**, because it
-sits at the back (§17.3). The S-n modules are not twelve products. They are twelve configurations
+sits at the back (§28.3). The S-n modules are not twelve products. They are twelve configurations
 over **eight shared components**, and those eight are the thing being built:
 
 | # | Component | What it is |
@@ -94,7 +101,7 @@ point.
 
 ## 5. The bundles the field actually sells
 
-One wiring, several heads. This is the commercial shape of §17.3:
+One wiring, several heads. This is the commercial shape of §28.3:
 
 | Bundle | Modules | Note |
 |---|---|---|
@@ -107,7 +114,7 @@ One wiring, several heads. This is the commercial shape of §17.3:
 
 ## 6. Connector reuse — build once, attach everywhere
 
-The catalogue's own observation (§17.2) is that **component reuse is denser than methodology
+The catalogue's own observation (§28.2) is that **component reuse is denser than methodology
 reuse.** The connectors that recur:
 
 | Connector | Serves |
@@ -123,7 +130,7 @@ reuse.** The connectors that recur:
 
 ## 7. Three structural facts worth carrying
 
-From §17.1, and each one changes what you would build first:
+From §28.1, and each one changes what you would build first:
 
 1. **Four action patterns cover all twelve modules** — report→forum · task-in-system-of-work ·
    policy engine · bounded closed-loop. And **most modules run two at once**: an action layer
@@ -153,14 +160,14 @@ From §17.1, and each one changes what you would build first:
 |---|---|
 | Doc 03 headers | 21 methods, M-1…M-21. Survival is **M-5**, causal/uplift **M-6** |
 | Doc 04 §3 overview | Survival **M-6**, causal/uplift **M-7** |
-| Doc 04 §17.4 fan-out | An **11-method** scheme: M-5 anomaly, M-6 survival, M-7 uplift, M-9 documents/NLP, M-10 the agent, M-11 optimisation |
+| Doc 04 §28.4 fan-out | An **11-method** scheme: M-5 anomaly, M-6 survival, M-7 uplift, M-9 documents/NLP, M-10 the agent, M-11 optimisation |
 
 **Do not quote an M-id externally without saying which table it came from.** The families are
 stable; the numbers are not.
 
 ### What the fan-out matrix actually says
 
-Reading §17.4 rather than just noting it exists:
+Reading §28.4 rather than just noting it exists:
 
 - **Tabular supervised + entity resolution + the policy engine underpin ten of twelve modules.**
   The tabular methodology is the workhorse, exactly as the prevalence evidence predicts.

@@ -88,8 +88,8 @@ in, a project profile out) and `agent-project` (builds and changes Pipelines by 
 retrieved from the corpora. Two rules they both hold to: retrieval matches on the **situation and
 never the answer** (matching the answer shows the model what it is supposed to conclude), and the
 solutions catalogue is **injected as context, not exposed as a tool** (a tool anchors every run on
-whatever it returned first, and without the catalogue the model invents ids like `S-23` against a
-catalogue whose highest is `S-12`).
+whatever it returned first, and without the catalogue the model invents ids like `S-31` against a
+catalogue whose highest is `S-23`).
 
 **Training data and eval data must never overlap.** The eval profiles are the *test set* for
 Auto-Suggest, so `agent-autosuggest-corpus` generates its own situations and refuses to start if it
@@ -201,7 +201,7 @@ This file is the jump-table and stays short. Anything needing more than a paragr
 
 | Topic | Read when |
 |---|---|
-| [`docs/solutions/`](docs/solutions/) | **What we can build and who wants it.** [`buildable-models.md`](docs/solutions/buildable-models.md) — the twelve Band-A modules S-1…S-12, eight Band-B sketches, the 21 methods behind them, and what the engine actually trains today. [`buyers-and-roi.md`](docs/solutions/buyers-and-roi.md) — the customer thesis, the industry map by ROI fit, and per module the buyer, metrics and measurement design. ⚠️ Internal-confidential |
+| [`docs/solutions/`](docs/solutions/) | **What we can build and who wants it.** [`buildable-models.md`](docs/solutions/buildable-models.md) — the twelve Band-A modules S-1…S-12 (the catalogue itself now runs to S-23: S-13…S-23 were added 2026-10-09 and are not yet reconciled on that page), eight Band-B sketches, the 21 methods behind them, and what the engine actually trains today. [`buyers-and-roi.md`](docs/solutions/buyers-and-roi.md) — the customer thesis, the industry map by ROI fit, and per module the buyer, metrics and measurement design. ⚠️ Internal-confidential |
 | [`docs/agents/`](docs/agents/) | The Python agent scaffold — profiles, discovery vs capture, traces, evals, the bootstrap sequence |
 | [`docs/blueprint/`](docs/blueprint/) | The wtm blueprint export the docs site and GitHub issues are generated from |
 

@@ -53,7 +53,7 @@ which is leakage in the shape of a helpful prompt.
 **The solutions catalogue is injected as context, not exposed as a tool.** Reached through a tool it
 anchors every run on whatever came back first — the failure that made three eval-generator runs
 produce the same domain. It is also the vocabulary: without it the model invents plausible ids
-(`S-23` against a catalogue whose highest is `S-12`). A catalogue that cannot be built raises rather
+(`S-31` against a catalogue whose highest is `S-23`). A catalogue that cannot be built raises rather
 than returning empty, because an empty one makes the id check vacuously pass and the validator then
 reports an answer with invented ids as clean.
 
