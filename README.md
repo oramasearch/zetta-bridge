@@ -27,13 +27,14 @@ Keep the pinned commits up to date after a `git pull`:
 git submodule update --init --recursive
 ```
 
-All submodules are **private** (`oramasearch/zetta`, `oramasearch/zetta-docs`, `oramasearch/solutions-designs`, `oramasearch/orama-design`, `oramasearch/orama-perfcost`, `oramasearch/orama-website-v2`) — you need `git@github.com:`-style SSH access with a key registered to the `oramasearch` org.
+All submodules are **private** (`oramasearch/zetta`, `oramasearch/zetta-tunnel`, `oramasearch/zetta-docs`, `oramasearch/solutions-designs`, `oramasearch/orama-design`, `oramasearch/orama-perfcost`, `oramasearch/orama-website-v2`) — you need `git@github.com:`-style SSH access with a key registered to the `oramasearch` org.
 
 ## Modules
 
 | Module | What it is |
 |---|---|
 | [`modules/zetta`](modules/zetta/) | **Orama Zetta** — the product. Turns a plain-language problem (or an artifact you already have) into a correct, deployed, running data + AI system on infrastructure you control, and learns from your data. *Under the hood today:* a C++26 equal-peer CRDT-replicated store with clustering, JSONL storage + large objects, a Postgres-SQL subset, headed (SDL3 + Dear ImGui) + headless modes. GUI control plane, one-button deploy, tiered storage, compute-near-data + the learning loop are in flight. Has its own `CLAUDE.md`; build with CMake. |
+| [`modules/zetta-tunnel`](modules/zetta-tunnel/) | **zetta-tunnel** — Orama's own tunnel, in C++26: an authenticated, narrow path from a developer (or another network) to one service, app or deployment in a workspace, running air-gapped. The provider behind the operator's tunnel kind ([orama-operator#437](https://github.com/oramasearch/orama-operator/issues/437)). Nothing built yet but `--version`; the design comes first. Has its own `CLAUDE.md`; build with CMake. |
 | [`modules/zetta-docs`](modules/zetta-docs/) | The **Orama Zetta blueprint docs website** — MkDocs Material, Railway-hosted via `Dockerfile` + `railway.toml`. Generated, not hand-edited: projected from the wtm `ORAMA-ZETTA` blueprint. The `.sync/` generators (`create_issues.py`, `render.py`) live here. |
 | [`modules/solutions-designs`](modules/solutions-designs/) | **Enterprise AI solution designs for Orama Zetta** — a working space where a real-world enterprise AI problem is taken end-to-end into a Zetta solution design. Staged workflow: **evidence & ideas → analysis → design**. No application code. Has its own `CLAUDE.md`. |
 | [`modules/orama-design`](modules/orama-design/) | **Orama visual design** — the design / visual repo, pinned as a **branch-following** submodule on `main` (design-system + Studio UI work). Refresh with `git submodule update --remote modules/orama-design`. Has its own `README.md`. |

@@ -49,3 +49,6 @@
 [submodule "modules/agent-application"]
 	path = modules/agent-application
 	url = git@github.com:oramasearch/agent-application.git
+[submodule "modules/zetta-tunnel"]
+	path = modules/zetta-tunnel
+	url = git@github.com:oramasearch/zetta-tunnel.git
