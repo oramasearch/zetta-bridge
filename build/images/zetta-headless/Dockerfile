@@ -13,7 +13,8 @@
 # OpenSSL 3 + C++ runtime. See docs/projects/one-orama/zetta-headless-reference.md (in orama-bridge).
 
 # ---------- build stage ----------
-FROM ubuntu:24.04 AS build
+# Pinned by digest (lake#1003): a moved tag must never change the image.
+FROM ubuntu:24.04@sha256:2198e4c65076e9cb0b3d695219df667c0e3b0072da64ca3c2648aca17dcecaf5 AS build
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Clang 17+ is required for C++26; install clang-19 from the official LLVM apt channel. Plus the
@@ -58,7 +59,7 @@ RUN cmake -S . -B build -G Ninja \
  && { strip build/bin/zetta || true; }
 
 # ---------- runtime stage ----------
-FROM ubuntu:24.04 AS runtime
+FROM ubuntu:24.04@sha256:2198e4c65076e9cb0b3d695219df667c0e3b0072da64ca3c2648aca17dcecaf5 AS runtime
 ENV DEBIAN_FRONTEND=noninteractive
 # Runtime libs only: OpenSSL 3 + the C++ runtime. (If `ldd` shows libc++, add libc++1-19/libc++abi1-19
 # from the LLVM channel — this first cut assumes the default libstdc++ toolchain.)

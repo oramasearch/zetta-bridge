@@ -10,7 +10,8 @@
 # image) -> operator (CRD). Build from the zetta submodule as context:
 #   docker build -t oramasearch/zetta-e2e:v1-sandbox \
 #     -f build/images/zetta-e2e/Dockerfile modules/zetta
-FROM alpine:3.20
+# Pinned by digest (lake#1003): a moved tag must never change the image.
+FROM alpine:3.20@sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc
 RUN apk add --no-cache curl jq
 COPY tests/e2e/zetta-e2e.sh /usr/local/bin/zetta-e2e
 RUN chmod +x /usr/local/bin/zetta-e2e
