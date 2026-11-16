@@ -34,46 +34,6 @@ Private, **MkDocs Material** (markdown + pre-rendered Graphviz SVGs), Railway-ho
 
 Private, docs-only (no build/runtime/tests). A working space where a real-world **enterprise AI problem** is taken end-to-end into a concrete **Orama Zetta solution design**. Worked in **strict stages — evidence & ideas → analysis → design** (we don't jump ahead). One folder per solution under `solutions/<slug>/`; `templates/solution/` is the scaffold. Has its own `CLAUDE.md`. The governing rule for the current stage: **collect, don't conclude** — gather raw evidence + loose ideas, no analysis/ranking/design until explicitly moved on.
 
-### `modules/orama-design` — Orama visual design
-
-Private, the **Orama design / visual** repo (Daniel's design workspace, upstream
-`nisttahuz/orama-website`). Pinned as a **branch-following submodule** on `main`, which
-carries the merged July 23 state: the live **Orama Studio** prototype (`src/studio/`),
-the design system (`packages/design-system/`, Storybook = source of truth), the Zetta
-baseline (`apps/zetta-studio/`), the marketing clone + skins (`src/`), and the Orama
-Project Hub (`src/workspace/`). Read its `CLAUDE.md` + `HANDOFF.md` before editing. A
-deep inventory (screens, flows, personas, components, decisions) lives in the umbrella
-bridge at `docs/projects/orama-studio-marketplace/design-index.md`
-(https://github.com/oramasearch/orama-bridge). Because it tracks a branch,
-`git submodule update --remote modules/orama-design` pulls the latest on `main` (plain
-`--init` still checks out the pinned commit).
-
-### `modules/orama-perfcost` — benchmarking + cost/performance
-
-Private, docs/data + harnesses. **Performance benchmarking** and **cost analysis** of
-Orama products vs third-party products (e.g. Turbopuffer — vendor-published numbers
-harvested with full provenance). Canonical output: `data/latest.json` (spec in
-`spec/dataset-spec.md`), built/validated by stdlib-only Python scripts; refreshes are
-driven by the module's own **`perfcost-refresh` skill** (`.claude/skills/perfcost-refresh/`,
-runbook at `docs/runbook.md`). First-party Zetta harness is stubbed — blocked on the
-Zetta API. Pinned as a **branch-following** submodule on `main` (`git submodule
-update --remote modules/orama-perfcost` pulls the latest; plain `--init` checks out the
-pinned commit). Read its own `README.md` before editing.
-
-### `modules/orama-website-v2` — the Orama marketing website
-
-Private, **Vite + React + shadcn/ui**, prerendered/SSG (custom scripts, not a
-meta-framework); content lives as TS modules under `src/content/` with build-time
-content gates under `src/content/validation/` + `content/registry/` (routes, claims,
-product-truth, forbidden-content). **Currently enforces a price-free / no-numbers
-posture** — any currency token or metric fails the build. Future consumer of the
-`orama-perfcost` dataset via the vendored-copy publish path
-([`modules/orama-perfcost/docs/architecture.md`](modules/orama-perfcost/docs/architecture.md));
-wiring that up requires lifting the posture + a net-new compare surface. Pinned as a
-**branch-following** submodule on `main` (`git submodule update --remote
-modules/orama-website-v2` pulls the latest; plain `--init` checks out the pinned
-commit). Read its own docs before editing.
-
 ### `modules/agent-*` — the Python agent scaffold
 
 Private, **Python + uv** (never pip), one repo per agent, **sibling to `zetta`**. The bootstrap

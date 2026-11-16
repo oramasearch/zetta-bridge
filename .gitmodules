@@ -1,57 +1,45 @@
 [submodule "modules/zetta"]
 	path = modules/zetta
-	url = git@github.com:oramasearch/zetta.git
+	url = https://github.com/oramasearch/zetta.git
 [submodule "modules/zetta-docs"]
 	path = modules/zetta-docs
-	url = git@github.com:oramasearch/zetta-docs.git
+	url = https://github.com/oramasearch/zetta-docs.git
 [submodule "modules/solutions-designs"]
 	path = modules/solutions-designs
-	url = git@github.com:oramasearch/solutions-designs.git
-[submodule "modules/orama-design"]
-	path = modules/orama-design
-	url = git@github.com:oramasearch/orama-design.git
-	branch = main
-[submodule "modules/orama-perfcost"]
-	path = modules/orama-perfcost
-	url = git@github.com:oramasearch/orama-perfcost.git
-	branch = main
-[submodule "modules/orama-website-v2"]
-	path = modules/orama-website-v2
-	url = git@github.com:oramasearch/orama-website-v2.git
-	branch = main
+	url = https://github.com/oramasearch/solutions-designs.git
 [submodule "modules/agent-eval-generator"]
 	path = modules/agent-eval-generator
-	url = git@github.com:oramasearch/agent-eval-generator.git
+	url = https://github.com/oramasearch/agent-eval-generator.git
 [submodule "modules/zetta-web-e2e"]
 	path = modules/zetta-web-e2e
-	url = git@github.com:oramasearch/zetta-web-e2e.git
+	url = https://github.com/oramasearch/zetta-web-e2e.git
 [submodule "modules/agent-autosuggest-corpus"]
 	path = modules/agent-autosuggest-corpus
-	url = git@github.com:oramasearch/agent-autosuggest-corpus.git
+	url = https://github.com/oramasearch/agent-autosuggest-corpus.git
 [submodule "modules/agent-project-corpus"]
 	path = modules/agent-project-corpus
-	url = git@github.com:oramasearch/agent-project-corpus.git
+	url = https://github.com/oramasearch/agent-project-corpus.git
 [submodule "modules/agent-autosuggest"]
 	path = modules/agent-autosuggest
-	url = git@github.com:oramasearch/agent-autosuggest.git
+	url = https://github.com/oramasearch/agent-autosuggest.git
 [submodule "modules/agent-project"]
 	path = modules/agent-project
-	url = git@github.com:oramasearch/agent-project.git
+	url = https://github.com/oramasearch/agent-project.git
 [submodule "modules/agent-runtime"]
 	path = modules/agent-runtime
-	url = git@github.com:oramasearch/agent-runtime.git
+	url = https://github.com/oramasearch/agent-runtime.git
 [submodule "modules/agent-ask-orama"]
 	path = modules/agent-ask-orama
-	url = git@github.com:oramasearch/agent-ask-orama.git
+	url = https://github.com/oramasearch/agent-ask-orama.git
 [submodule "modules/agent-creator"]
 	path = modules/agent-creator
-	url = git@github.com:oramasearch/agent-creator.git
+	url = https://github.com/oramasearch/agent-creator.git
 [submodule "modules/agent-application"]
 	path = modules/agent-application
-	url = git@github.com:oramasearch/agent-application.git
+	url = https://github.com/oramasearch/agent-application.git
 [submodule "modules/zetta-tunnel"]
 	path = modules/zetta-tunnel
-	url = git@github.com:oramasearch/zetta-tunnel.git
+	url = https://github.com/oramasearch/zetta-tunnel.git
 [submodule "modules/base-agent-0.6b"]
 	path = modules/base-agent-0.6b
 	url = https://github.com/oramasearch/base-agent-0.6b.git
